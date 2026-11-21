@@ -1,0 +1,12 @@
+/* Minimal stub. Full token set + dark mode in Phase 2. */
+:root {
+  --bt-bg: #ffffff;
+  --bt-text: #111111;
+  --bt-muted: #555555;
+}
+
+@theme inline {
+  --color-bg: var(--bt-bg);
+  --color-text: var(--bt-text);
+  --color-muted: var(--bt-muted);
+}

@@ -1,0 +1,2 @@
+# Cloudflare Turnstile always-pass TEST secret. Real one: wrangler pages secret put TURNSTILE_SECRET_KEY
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA

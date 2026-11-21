@@ -1,0 +1,5 @@
+name = "better-ternate"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+# D1 binding "DB" is added in Phase 6.
