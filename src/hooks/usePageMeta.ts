@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import seoMetadata from '@/data/seo-metadata.json'
@@ -83,7 +83,7 @@ export function usePageMeta(title?: string, description?: string) {
   const rawDescription = description ?? routeMetadata?.description ?? t('site.tagline')
   const desc = descriptionWithinLimit(rawDescription)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const canonicalUrl = `${PRODUCTION_URL}${routeLocation.pathname}`
     const socialTitle = route === 'home' ? 'Introducing Better Ternate' : fullTitle
 
