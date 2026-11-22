@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { useTheme } from '@/hooks/useTheme'
 import { NAV_ITEMS } from '@/lib/site'
+import { LogoMark } from './Logo'
 import MobileNav, { navLinkClass } from './MobileNav'
 
 export default function Header({ onSearch }: { onSearch: () => void }) {
@@ -15,7 +16,11 @@ export default function Header({ onSearch }: { onSearch: () => void }) {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-bg">
       <Container className="flex min-h-14 items-center gap-1">
-        <Link to="/" className="mr-auto flex min-h-tap items-center text-lg font-bold">
+        <Link
+          to="/"
+          className="mr-auto flex min-h-tap items-center gap-2 font-heading text-lg font-bold tracking-tight"
+        >
+          <LogoMark className="size-8" />
           {t('site.name')}
         </Link>
 

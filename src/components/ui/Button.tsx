@@ -6,7 +6,7 @@ type Variant = 'primary' | 'secondary' | 'ghost'
 type Size = 'sm' | 'md' | 'lg'
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:shrink-0'
 const variants: Record<Variant, string> = {
   primary: 'bg-primary text-primary-contrast hover:opacity-90',
   secondary: 'border border-muted bg-bg text-text hover:bg-surface',

@@ -28,7 +28,7 @@
   },
   "header": {
     "search": "Maghanap",
-    "switchLanguage": "Switch to English",
+    "switchLanguage": "EN: Switch to English",
     "languageShort": "EN",
     "themeToDark": "Lumipat sa dark mode",
     "themeToLight": "Lumipat sa light mode",
@@ -62,7 +62,7 @@
     },
     "latestNews": "Pinakabagong balita",
     "allNews": "Tingnan lahat ng balita",
-    "readMore": "Basahin pa"
+    "readMore": "Basahin ang buong abiso"
   },
   "breadcrumb": {
     "label": "Breadcrumb",

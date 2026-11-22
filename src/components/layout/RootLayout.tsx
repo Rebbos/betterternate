@@ -33,8 +33,8 @@ export default function RootLayout() {
   }, [])
 
   return (
-    // pb-16 keeps the footer clear of the fixed mobile BottomBar.
-    <div className="flex min-h-dvh flex-col pb-16 md:pb-0">
+    // The Footer pads itself to stay clear of the fixed mobile BottomBar.
+    <div className="flex min-h-dvh flex-col">
       <SkipLink />
       <DisclaimerBanner />
       {!online && (

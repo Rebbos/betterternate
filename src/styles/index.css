@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* Self-hosted heading font (font-display: swap; the browser only downloads the subsets it needs). */
+@import '@fontsource-variable/bricolage-grotesque';
 @import './tokens.css';
 
 @layer base {
@@ -9,12 +11,17 @@
   h1,
   h2,
   h3 {
-    @apply font-heading;
+    @apply font-heading tracking-tight;
   }
 
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+  }
+
+  /* On the deep-water footer the teal ring would vanish; use the light text color. */
+  .bt-inverse :focus-visible {
+    outline-color: var(--color-inverse-text);
   }
 
   /* Lock page scroll while a modal <dialog> (drawer, search) is open. */

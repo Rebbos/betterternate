@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { Building2, FileText, LayoutGrid, MapPin, Phone, Search } from 'lucide-react'
 import { Alert } from '@/components/ui/Alert'
+import { CoastArt } from '@/components/layout/Logo'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Container, Section } from '@/components/ui/Container'
@@ -40,47 +41,53 @@ export default function Home() {
         </Alert>
       )}
 
-      <section aria-labelledby="home-title" className="py-8 md:py-14">
-        <h1 id="home-title" className="text-3xl font-bold md:text-4xl">
-          {t('home.title')}
-        </h1>
-        <p className="mt-2 max-w-prose text-muted">{t('site.tagline')}</p>
+      <section
+        aria-labelledby="home-title"
+        className="mt-6 overflow-hidden rounded-lg bg-surface md:mt-10"
+      >
+        <div className="px-4 pt-8 sm:px-8 md:pt-12">
+          <h1 id="home-title" className="text-3xl font-bold md:text-5xl">
+            {t('home.title')}
+          </h1>
+          <p className="mt-2 max-w-prose text-muted md:text-lg">{t('site.tagline')}</p>
 
-        <form
-          role="search"
-          className="mt-6 max-w-2xl"
-          onSubmit={(e) => {
-            e.preventDefault()
-            openSearch(query)
-          }}
-        >
-          <label htmlFor="home-search" className="mb-2 block text-lg font-semibold">
-            {t('home.searchLabel')}
-          </label>
-          <div className="flex gap-2">
-            <input
-              id="home-search"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t('home.searchPlaceholder')}
-              className="block min-h-tap w-full min-w-0 rounded-md border border-muted bg-bg px-3 text-base text-text placeholder:text-muted"
-            />
-            <Button type="submit">
-              <Search aria-hidden className="size-5" />
-              <span className="max-sm:sr-only">{t('header.search')}</span>
-            </Button>
-          </div>
-        </form>
+          <form
+            role="search"
+            className="mt-6 max-w-2xl"
+            onSubmit={(e) => {
+              e.preventDefault()
+              openSearch(query)
+            }}
+          >
+            <label htmlFor="home-search" className="mb-2 block text-lg font-semibold">
+              {t('home.searchLabel')}
+            </label>
+            <div className="flex gap-2">
+              <input
+                id="home-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t('home.searchPlaceholder')}
+                className="block min-h-tap w-full min-w-0 rounded-md border border-muted bg-bg px-3 text-base text-text placeholder:text-muted"
+              />
+              <Button type="submit">
+                <Search aria-hidden className="size-5" />
+                <span className="max-sm:sr-only">{t('header.search')}</span>
+              </Button>
+            </div>
+          </form>
+        </div>
+        <CoastArt className="mt-6 h-20 md:mt-4 md:h-36" />
       </section>
 
-      <Section title={t('home.quickActions')} className="pt-0 md:pt-0">
+      <Section title={t('home.quickActions')}>
         <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
           {QUICK_ACTIONS.map(({ to, key, Icon }) => (
             <li key={to}>
               <Link
                 to={to}
-                className="flex h-full min-h-24 flex-col gap-2 rounded-lg border border-border bg-surface p-4 shadow-sm hover:border-primary"
+                className="flex h-full min-h-24 flex-col gap-2 rounded-lg border border-border bg-bg p-4 shadow-sm hover:border-primary hover:shadow-md motion-safe:transition motion-safe:hover:-translate-y-0.5"
               >
                 <Icon aria-hidden className="size-6 text-primary" />
                 <span className="font-semibold">{t(`nav.${key}`)}</span>

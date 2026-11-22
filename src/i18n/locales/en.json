@@ -28,7 +28,7 @@
   },
   "header": {
     "search": "Search",
-    "switchLanguage": "Lumipat sa Filipino",
+    "switchLanguage": "FIL: Lumipat sa Filipino",
     "languageShort": "FIL",
     "themeToDark": "Switch to dark mode",
     "themeToLight": "Switch to light mode",
@@ -62,7 +62,7 @@
     },
     "latestNews": "Latest news",
     "allNews": "See all news",
-    "readMore": "Read more"
+    "readMore": "Read the full advisory"
   },
   "breadcrumb": {
     "label": "Breadcrumb",

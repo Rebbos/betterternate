@@ -1,23 +1,16 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+import { stubTurnstile } from './helpers'
 
-/**
- * Stub Turnstile (no network to Cloudflare in tests): render() immediately issues a token,
- * reset() issues a fresh one. Counts resets so we can assert tokens aren't reused.
- */
-async function stubTurnstile(page: Page) {
-  await page.route('https://challenges.cloudflare.com/**', (route) =>
-    route.fulfill({
-      contentType: 'text/javascript',
-      body: `
-        window.__resets = 0; let n = 0, cb;
-        window.turnstile = {
-          render(el, o) { cb = o.callback; setTimeout(() => cb('token-' + ++n)); return 'w1' },
-          reset() { window.__resets++; setTimeout(() => cb('token-' + ++n)) },
-          remove() {},
-        };`,
-    }),
-  )
-}
+test('contact: Turnstile fails to load → warning shown, submit stays disabled', async ({
+  page,
+}) => {
+  await stubTurnstile(page, 'unavailable')
+  await page.goto('/contact')
+  await expect(page.getByText("The security check couldn't load.")).toBeVisible()
+  await page.getByRole('textbox', { name: 'Email' }).fill('johndoe@example.com')
+  await page.getByRole('textbox', { name: 'Message' }).fill('This should not be sendable.')
+  await expect(page.getByRole('button', { name: 'Send message' })).toBeDisabled()
+})
 
 test('contact: sends token + fields, shows success, resets the widget', async ({ page }) => {
   await stubTurnstile(page)

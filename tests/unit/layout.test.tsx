@@ -36,7 +36,7 @@ test('unknown routes render the 404 page', async () => {
 test('language toggle switches to Filipino, updates <html lang>, and persists', async () => {
   renderAt('/')
   await screen.findByRole('heading', { level: 1 })
-  await userEvent.click(screen.getByRole('button', { name: 'Lumipat sa Filipino' }))
+  await userEvent.click(screen.getByRole('button', { name: 'FIL: Lumipat sa Filipino' }))
   expect(document.documentElement.lang).toBe('fil')
   expect(localStorage.getItem('bt-lang')).toBe('fil')
   expect(

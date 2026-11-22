@@ -3,6 +3,10 @@ import { expect, test } from '@playwright/test'
 test.use({ baseURL: 'http://localhost:4173' })
 
 test('hotlines work offline after the first visit', async ({ page, context }) => {
+  test.skip(
+    test.info().project.name !== 'desktop-1440',
+    'service worker behaviour is viewport-independent',
+  )
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   // Wait until the service worker has installed and taken control (precache done).
