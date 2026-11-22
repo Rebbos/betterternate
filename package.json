@@ -6,8 +6,9 @@
   "scripts": {
     "predev": "npm run build:search",
     "dev": "vite",
-    "build": "npm run validate:content && npm run generate:seo && npm run build:search && npm run typecheck && vite build",
+    "build": "npm run validate:content && npm run generate:seo && npm run generate:sitemap && npm run build:search && npm run typecheck && vite build",
     "generate:seo": "node scripts/generate-seo.cjs",
+    "generate:sitemap": "node scripts/generate-sitemap.cjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
