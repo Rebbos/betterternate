@@ -1,0 +1,33 @@
+# Save as .github/CODEOWNERS
+# Replace @your-username and @friend-username with real GitHub usernames.
+# Later lines take priority over earlier ones.
+
+# Default: both review
+*                                   @your-username @friend-username
+
+# ── Frontend performance, SEO & Google ──────────────────────
+/src/                               @friend-username
+/public/                            @friend-username
+/src/data/seo-metadata.json         @friend-username
+/lighthouserc.json                  @friend-username
+/vite.config.ts                     @friend-username
+/tailwind.config.js                 @friend-username
+
+# ── Security & backend ──────────────────────────────────────
+/functions/                         @your-username
+/db/                                @your-username
+/wrangler.jsonc                     @your-username
+/public/_headers                    @your-username
+/.env.example                       @your-username
+/.dev.vars.example                  @your-username
+/src/components/forms/              @your-username
+/src/lib/schemas.ts                 @your-username @friend-username
+
+# ── Shared ──────────────────────────────────────────────────
+/config/                            @your-username @friend-username
+/src/data/                          @your-username @friend-username
+/package.json                       @your-username @friend-username
+/package-lock.json                  @your-username @friend-username
+/.github/                           @your-username @friend-username
+/CLAUDE.md                          @your-username @friend-username
+/CONTRIBUTING.md                    @your-username @friend-username

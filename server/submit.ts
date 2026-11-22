@@ -3,8 +3,8 @@
  * Lives outside /api so Vercel doesn't turn it into a route.
  */
 import type { z } from 'zod'
-import { HONEYPOT, TOKEN_FIELD } from '../src/lib/forms'
-import { insertSubmission, type Row } from './db'
+import { HONEYPOT, TOKEN_FIELD } from '../src/lib/forms.js'
+import { insertSubmission, type Row } from './db.js'
 
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const MAX_BODY_BYTES = 16 * 1024

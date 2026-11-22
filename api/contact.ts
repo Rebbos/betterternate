@@ -1,6 +1,6 @@
 // Vercel Function: POST /api/contact
-import { handleSubmission } from '../server/submit'
-import { contactSchema } from '../src/lib/forms'
+import { handleSubmission } from '../server/submit.js'
+import { contactSchema } from '../src/lib/forms.js'
 
 export const POST = handleSubmission(contactSchema, (d) => ({
   type: 'contact',
