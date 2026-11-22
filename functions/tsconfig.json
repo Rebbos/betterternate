@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["."]
+  "include": [".", "../server", "../tests/functions"]
 }

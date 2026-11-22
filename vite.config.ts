@@ -33,12 +33,14 @@ export default defineConfig({
       },
     }),
   ],
+  // `npm run dev` + `npm run pages:dev` together: Vite serves the app, wrangler serves /api.
+  server: { proxy: { '/api': 'http://localhost:8788' } },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   test: {
     environment: 'jsdom',
-    include: ['tests/unit/**/*.test.{ts,tsx}'],
+    include: ['tests/unit/**/*.test.{ts,tsx}', 'tests/functions/**/*.test.ts'],
     setupFiles: ['./tests/setup.ts'],
   },
 })

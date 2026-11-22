@@ -198,6 +198,61 @@
       "tourism": "Turismo"
     }
   },
+  "contact": {
+    "lead": "Magtanong, mag-report ng problema sa site na ito, o magmungkahi ng pagwawasto.",
+    "notOfficial": "Ang form na ito ay para sa mga boluntaryo ng Better Ternate, hindi sa pamahalaang bayan. Hindi ito para sa emergency o opisyal na kahilingan. Para sa emergency, tingnan ang",
+    "anonymous": "Magpadala nang hindi nagpapakilala",
+    "anonymousHint": "Hindi namin hihingin o itatago ang iyong pangalan o email. Hindi ka namin masasagot.",
+    "name": "Pangalan",
+    "email": "Email",
+    "emailHint": "Para masagot ka namin. Hindi ibabahagi kaninuman.",
+    "category": "Paksa",
+    "categories": {
+      "question": "Tanong",
+      "report-issue": "Problema sa site na ito",
+      "correction": "Luma o maling impormasyon",
+      "suggestion": "Mungkahi",
+      "other": "Iba pa"
+    },
+    "message": "Mensahe",
+    "messageHint": "Hindi bababa sa 10 character.",
+    "aboutPage": "Tungkol sa pahina: {{page}}",
+    "submit": "Ipadala ang mensahe",
+    "successTitle": "Naipadala ang mensahe",
+    "success": "Salamat. Babasahin ng isang boluntaryo ang iyong mensahe.",
+    "errors": {
+      "email": "Maglagay ng wastong email address, o piliing magpadala nang hindi nagpapakilala.",
+      "name": "Masyadong mahaba ang pangalan.",
+      "category": "Pumili ng paksa.",
+      "message": "Sumulat ng 10 hanggang 2,000 character."
+    }
+  },
+  "feedback": {
+    "question": "Nakatulong ba ang pahinang ito?",
+    "yes": "Oo",
+    "no": "Hindi",
+    "commentYes": "May idadagdag ka pa? (opsyonal)",
+    "commentNo": "Ano ang kulang o mali? (opsyonal)",
+    "commentHint": "Huwag maglagay ng personal na impormasyon.",
+    "submit": "Ipadala ang feedback",
+    "thanks": "Salamat sa iyong feedback!"
+  },
+  "forms": {
+    "optional": "Opsyonal",
+    "sending": "Ipinapadala…",
+    "waitVerification": "Hinihintay matapos ang security check…",
+    "verificationUnavailable": "Hindi ma-load ang security check. Tingnan ang iyong koneksyon, o subukan mamaya.",
+    "privacy": "Gagamitin lamang namin ang iyong ipinadala para sumagot at pagbutihin ang site.",
+    "privacyLink": "Abiso sa privacy",
+    "honeypot": "Iwanang blangko ang field na ito",
+    "errorTitle": "Hindi naipadala",
+    "errors": {
+      "verification": "Nabigo o nag-expire ang security check. Pakisubukang muli.",
+      "invalid": "May mga field na hindi wasto. Suriin ang form at subukang muli.",
+      "network": "Mukhang offline ka. Hindi naipadala ang iyong mensahe; subukang muli kapag may koneksyon.",
+      "server": "May nagkaproblema sa aming panig. Pakisubukan mamaya."
+    }
+  },
   "offline": {
     "banner": "Offline ka. Nakikita mo ang naka-save na impormasyon; maaaring luma na ito."
   },

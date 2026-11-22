@@ -2,4 +2,11 @@ name = "better-ternate"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-11-01"
 
-# D1 binding "DB" is added in Phase 6.
+# Form submissions. Create the real database once with:
+#   npx wrangler d1 create better-ternate
+# then paste the printed database_id below. Local dev works with the placeholder.
+[[d1_databases]]
+binding = "DB"
+database_name = "better-ternate"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"

@@ -17,5 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "tests", "scripts", "vite.config.ts", "playwright.config.ts"]
+  "include": ["src", "tests", "scripts", "vite.config.ts", "playwright.config.ts"],
+  // Function tests use Workers types; checked by functions/tsconfig.json instead.
+  "exclude": ["tests/functions"]
 }

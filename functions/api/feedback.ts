@@ -1,3 +1,9 @@
-// Turnstile verification + D1 insert in Phase 6.
-export const onRequestPost: PagesFunction = () =>
-  Response.json({ ok: false, error: 'not_implemented' }, { status: 501 })
+import { handleSubmission } from '../../server/submit'
+import { feedbackSchema } from '../../src/lib/forms'
+
+export const onRequestPost = handleSubmission(feedbackSchema, (d) => ({
+  type: 'feedback',
+  category: d.helpful ? 'helpful' : 'not-helpful',
+  message: d.comment ?? '',
+  page_url: d.page_url,
+}))

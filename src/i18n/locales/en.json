@@ -198,6 +198,61 @@
       "tourism": "Tourism"
     }
   },
+  "contact": {
+    "lead": "Ask a question, report a problem with this site, or suggest a correction.",
+    "notOfficial": "This form reaches Better Ternate volunteers, not the municipal government. It is not for emergencies or official requests. For emergencies, see",
+    "anonymous": "Submit anonymously",
+    "anonymousHint": "We won't ask for or keep your name or email. We can't reply to you.",
+    "name": "Name",
+    "email": "Email",
+    "emailHint": "So we can reply. Not shared with anyone.",
+    "category": "Topic",
+    "categories": {
+      "question": "Question",
+      "report-issue": "Problem with this site",
+      "correction": "Outdated or wrong information",
+      "suggestion": "Suggestion",
+      "other": "Other"
+    },
+    "message": "Message",
+    "messageHint": "At least 10 characters.",
+    "aboutPage": "About page: {{page}}",
+    "submit": "Send message",
+    "successTitle": "Message sent",
+    "success": "Thank you. A volunteer will read your message.",
+    "errors": {
+      "email": "Enter a valid email address, or choose to submit anonymously.",
+      "name": "Name is too long.",
+      "category": "Choose a topic.",
+      "message": "Write between 10 and 2,000 characters."
+    }
+  },
+  "feedback": {
+    "question": "Was this page helpful?",
+    "yes": "Yes",
+    "no": "No",
+    "commentYes": "Anything to add? (optional)",
+    "commentNo": "What was missing or wrong? (optional)",
+    "commentHint": "Don't include personal information.",
+    "submit": "Send feedback",
+    "thanks": "Thanks for your feedback!"
+  },
+  "forms": {
+    "optional": "Optional",
+    "sending": "Sending…",
+    "waitVerification": "Waiting for the security check to finish…",
+    "verificationUnavailable": "The security check couldn't load. Check your connection, or try again later.",
+    "privacy": "We only use what you send to respond and improve the site.",
+    "privacyLink": "Privacy notice",
+    "honeypot": "Leave this field empty",
+    "errorTitle": "Not sent",
+    "errors": {
+      "verification": "The security check failed or expired. Please try again.",
+      "invalid": "Some fields aren't valid. Check the form and try again.",
+      "network": "You seem to be offline. Your message wasn't sent; please try again when connected.",
+      "server": "Something went wrong on our side. Please try again later."
+    }
+  },
   "offline": {
     "banner": "You're offline. Showing saved information; it may be out of date."
   },

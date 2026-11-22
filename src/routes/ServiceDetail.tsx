@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import { CalendarCheck, Clock, ExternalLink, Hourglass, MapPin, Phone } from 'lucide-react'
+import { FeedbackWidget } from '@/components/forms/FeedbackWidget'
 import PageHeader from '@/components/layout/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { Container, Section } from '@/components/ui/Container'
 import { SampleBadge } from '@/components/ui/SampleBadge'
 import { getOffice, getService } from '@/lib/content'
 import { formatDate, formatPeso, pick, telHref } from '@/lib/format'
-import { REPORT_URL } from '@/lib/site'
 import NotFound from './NotFound'
 
 export default function ServiceDetail() {
@@ -167,18 +167,17 @@ export default function ServiceDetail() {
                 <ExternalLink aria-hidden className="size-4" />
                 {t('services.source')}
               </a>
-              <a
-                href={REPORT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to={`/contact?category=correction&page=/services/${service.slug}`}
                 className="flex min-h-tap items-center gap-2 text-primary underline"
               >
                 {t('footer.report')}
-              </a>
+              </Link>
             </div>
           </Card>
         </aside>
       </div>
+      <FeedbackWidget />
     </Container>
   )
 }
