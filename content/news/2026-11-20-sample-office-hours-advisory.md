@@ -3,6 +3,7 @@ title: 'Sample advisory: Office hours notice'
 date: '2026-11-20'
 category: advisory
 summary: Placeholder advisory showing how notices appear on the site.
+expires: '2026-12-31'
 sample: true
 ---
 

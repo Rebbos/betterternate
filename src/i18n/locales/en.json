@@ -6,7 +6,8 @@
   "skipLink": "Skip to main content",
   "sample": {
     "badge": "Sample data",
-    "hint": "Placeholder information, not yet verified"
+    "hint": "Placeholder information, not yet verified",
+    "suffix": "(sample)"
   },
   "disclaimer": {
     "label": "Site notice",
@@ -49,7 +50,156 @@
   },
   "home": {
     "title": "Better Ternate",
-    "placeholder": "Unofficial community portal for Ternate, Cavite. Coming soon."
+    "searchLabel": "What do you need?",
+    "searchPlaceholder": "e.g. barangay clearance, cedula, hotline",
+    "quickActions": "Quick links",
+    "actions": {
+      "services": "Permits, certificates, payments",
+      "hotlines": "Emergency and help numbers",
+      "government": "Officials and offices",
+      "tourism": "Places to visit",
+      "transparency": "Budget and public documents"
+    },
+    "latestNews": "Latest news",
+    "allNews": "See all news",
+    "readMore": "Read more"
+  },
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "categories": {
+    "business": "Business",
+    "civil-registry": "Civil registry",
+    "health": "Health",
+    "social-welfare": "Social welfare",
+    "taxes-payments": "Taxes and payments",
+    "permits": "Permits and clearances",
+    "agriculture-fisheries": "Agriculture and fisheries",
+    "education": "Education",
+    "waste-management": "Waste management",
+    "disaster-preparedness": "Disaster preparedness"
+  },
+  "services": {
+    "lead": "Step-by-step guides to common government transactions in Ternate.",
+    "filter": "Filter by category",
+    "all": "All",
+    "processingTime": "Processing time",
+    "requirements": "Requirements",
+    "steps": "Steps",
+    "fees": "Fees",
+    "feeItem": "Item",
+    "feeAmount": "Amount",
+    "notes": "Notes",
+    "whereToGo": "Where to go",
+    "schedule": "Schedule",
+    "lastVerified": "Last verified",
+    "source": "Source"
+  },
+  "hotlines": {
+    "lead": "Tap a number to call. Emergency numbers are listed first.",
+    "types": {
+      "emergency": "Emergency",
+      "health": "Health",
+      "utility": "Utilities",
+      "barangay": "Barangay"
+    },
+    "always": "24/7",
+    "call": "Call {{name}} at {{number}}"
+  },
+  "government": {
+    "lead": "Elected officials and municipal offices of Ternate.",
+    "officials": "Elected officials",
+    "offices": "Offices directory",
+    "term": "Term: {{start}} – {{end}}"
+  },
+  "barangays": {
+    "lead": "Ternate has {{total}} barangays. Select one for contact details.",
+    "title": "Barangay {{name}}",
+    "unverified": "These details have not been verified yet.",
+    "captain": "Punong Barangay",
+    "hall": "Barangay hall",
+    "hotline": "Hotline",
+    "psgc": "PSGC code"
+  },
+  "transparency": {
+    "lead": "Public documents on how the municipality plans and spends.",
+    "budgetNote": "Budget data for local governments, where available, is published on BetterGov's public budget portal.",
+    "budgetLink": "Open budget.bettergov.ph",
+    "categories": {
+      "budget": "Budget",
+      "procurement": "Procurement",
+      "ordinance": "Ordinances",
+      "report": "Reports"
+    }
+  },
+  "tourism": {
+    "lead": "Beaches, trails, heritage sites and food spots in Ternate.",
+    "categories": {
+      "beach": "Beach",
+      "nature": "Nature",
+      "heritage": "Heritage",
+      "food": "Food",
+      "landmark": "Landmark"
+    },
+    "openMap": "Open in OpenStreetMap",
+    "map": "Map",
+    "osmContributors": "contributors"
+  },
+  "news": {
+    "lead": "Advisories, announcements and events.",
+    "categories": {
+      "advisory": "Advisory",
+      "announcement": "Announcement",
+      "event": "Event"
+    },
+    "source": "Original source"
+  },
+  "about": {
+    "lead": "What this site is, where the information comes from, and how to help.",
+    "purposeTitle": "Purpose",
+    "purpose": "Better Ternate is a volunteer-run guide that organizes local government information by what people need to do, like getting a barangay clearance or finding an emergency number, in English and Filipino.",
+    "officialTitle": "Official channels",
+    "official": "For official transactions and announcements, always go to the municipality directly:",
+    "officialHall": "The Ternate Municipal Hall and your barangay hall, in person",
+    "officialHotlines": "Emergency and office hotlines",
+    "officialGovPh": "GOV.PH, the national government portal",
+    "officialPending": "Links to the municipality's own website and social media pages will be added here once volunteers verify them.",
+    "sourcesTitle": "Data sources",
+    "sources": "Information is compiled by volunteers from public sources. Records marked “Sample data” are placeholders and must not be relied on.",
+    "sourcePsgc": "Barangay names and codes: Philippine Standard Geographic Code (PSGC)",
+    "sourceVolunteers": "Services, offices and hotlines: volunteer research, to be checked against official sources",
+    "sourceOsm": "Maps: © OpenStreetMap contributors",
+    "contributeTitle": "How to contribute",
+    "contribute": "Anyone can suggest a correction or add information. Content lives in plain files on GitHub and changes are reviewed before they go live.",
+    "privacyTitle": "Privacy notice",
+    "privacyIntro": "We follow the Data Privacy Act of 2012 (Republic Act No. 10173) and collect as little as possible.",
+    "privacyStorage": "Your language and theme choices are saved only in your own browser. We use no tracking cookies or ads.",
+    "privacyForms": "If you send us a message or feedback, we keep only what you submit, use it only to respond or fix the site, and delete it when no longer needed.",
+    "privacyThirdParty": "The map loads tiles from OpenStreetMap, which can see your IP address.",
+    "privacyRights": "You may ask to access, correct or delete information you sent us through the contact page."
+  },
+  "search": {
+    "title": "Search",
+    "label": "Search Better Ternate",
+    "close": "Close search",
+    "results": "Search results",
+    "loading": "Loading…",
+    "failed": "Search isn't available right now. Check your connection and try again.",
+    "count_one": "{{count}} result",
+    "count_other": "{{count}} results",
+    "hint": "Type to search. ↑ ↓ to move, Enter to open, Esc to close.",
+    "types": {
+      "service": "Services",
+      "hotline": "Hotlines",
+      "office": "Offices",
+      "barangay": "Barangays",
+      "news": "News",
+      "tourism": "Tourism"
+    }
+  },
+  "offline": {
+    "banner": "You're offline. Showing saved information; it may be out of date."
   },
   "pages": {
     "services": "Services",

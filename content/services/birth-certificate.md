@@ -18,6 +18,7 @@ processing_time: 'Sample: 1–2 working days'
 schedule: 'Mon–Fri, 8:00 AM – 5:00 PM (sample)'
 last_verified: '2026-11-21'
 source_url: https://example.com/sample-source
+keywords: [kapanganakan, sertipiko ng kapanganakan, PSA, civil registry]
 sample: true
 ---
 

@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { ButtonLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
+import { usePageMeta } from '@/hooks/usePageMeta'
 
 export default function NotFound() {
   const { t } = useTranslation()
+  usePageMeta(t('notFound.title'))
   return (
     <Container>
       <Section>

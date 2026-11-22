@@ -17,8 +17,47 @@
     outline-offset: 2px;
   }
 
-  /* Lock page scroll while the mobile drawer (modal <dialog>) is open. */
+  /* Lock page scroll while a modal <dialog> (drawer, search) is open. */
   html:has(dialog[open]) {
     overflow: hidden;
+  }
+}
+
+/* Markdown bodies (services, news). Tokens only. */
+@layer components {
+  .prose {
+    @apply max-w-prose leading-relaxed;
+  }
+  .prose > * + * {
+    @apply mt-4;
+  }
+  .prose h2 {
+    @apply mt-8 text-xl font-bold;
+  }
+  .prose h3 {
+    @apply mt-6 text-lg font-bold;
+  }
+  .prose a {
+    @apply text-primary underline;
+  }
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-border pl-4 text-muted;
+  }
+  /* Wide tables scroll inside themselves, never the page. */
+  .prose table {
+    @apply block max-w-full overflow-x-auto border-collapse text-sm;
+  }
+  .prose th,
+  .prose td {
+    @apply border border-border px-3 py-2 text-left;
+  }
+  .prose th {
+    @apply bg-surface font-semibold;
   }
 }

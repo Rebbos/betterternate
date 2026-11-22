@@ -6,7 +6,8 @@
   "skipLink": "Lumaktaw sa pangunahing nilalaman",
   "sample": {
     "badge": "Sample data",
-    "hint": "Pansamantalang impormasyon, hindi pa beripikado"
+    "hint": "Pansamantalang impormasyon, hindi pa beripikado",
+    "suffix": "(halimbawa)"
   },
   "disclaimer": {
     "label": "Paalala ng site",
@@ -49,7 +50,156 @@
   },
   "home": {
     "title": "Better Ternate",
-    "placeholder": "Hindi opisyal na community portal para sa Ternate, Cavite. Malapit na."
+    "searchLabel": "Ano ang kailangan mo?",
+    "searchPlaceholder": "hal. barangay clearance, cedula, hotline",
+    "quickActions": "Mabilisang link",
+    "actions": {
+      "services": "Permit, sertipiko, bayarin",
+      "hotlines": "Numero para sa emergency at tulong",
+      "government": "Mga opisyal at tanggapan",
+      "tourism": "Mga lugar na mapapasyalan",
+      "transparency": "Budget at pampublikong dokumento"
+    },
+    "latestNews": "Pinakabagong balita",
+    "allNews": "Tingnan lahat ng balita",
+    "readMore": "Basahin pa"
+  },
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "categories": {
+    "business": "Negosyo",
+    "civil-registry": "Rehistro sibil",
+    "health": "Kalusugan",
+    "social-welfare": "Kapakanang panlipunan",
+    "taxes-payments": "Buwis at bayarin",
+    "permits": "Permit at clearance",
+    "agriculture-fisheries": "Agrikultura at pangisdaan",
+    "education": "Edukasyon",
+    "waste-management": "Pamamahala ng basura",
+    "disaster-preparedness": "Paghahanda sa sakuna"
+  },
+  "services": {
+    "lead": "Hakbang-hakbang na gabay sa mga karaniwang transaksyon sa pamahalaan ng Ternate.",
+    "filter": "I-filter ayon sa kategorya",
+    "all": "Lahat",
+    "processingTime": "Tagal ng proseso",
+    "requirements": "Mga kailangan",
+    "steps": "Mga hakbang",
+    "fees": "Bayarin",
+    "feeItem": "Item",
+    "feeAmount": "Halaga",
+    "notes": "Mga tala",
+    "whereToGo": "Saan pupunta",
+    "schedule": "Iskedyul",
+    "lastVerified": "Huling beripikado",
+    "source": "Pinagmulan"
+  },
+  "hotlines": {
+    "lead": "Pindutin ang numero para tumawag. Nauuna ang mga numero para sa emergency.",
+    "types": {
+      "emergency": "Emergency",
+      "health": "Kalusugan",
+      "utility": "Kuryente at tubig",
+      "barangay": "Barangay"
+    },
+    "always": "24/7",
+    "call": "Tawagan ang {{name}} sa {{number}}"
+  },
+  "government": {
+    "lead": "Mga halal na opisyal at tanggapan ng munisipyo ng Ternate.",
+    "officials": "Mga halal na opisyal",
+    "offices": "Direktoryo ng mga tanggapan",
+    "term": "Termino: {{start}} – {{end}}"
+  },
+  "barangays": {
+    "lead": "May {{total}} barangay ang Ternate. Pumili ng isa para sa detalye.",
+    "title": "Barangay {{name}}",
+    "unverified": "Hindi pa beripikado ang mga detalyeng ito.",
+    "captain": "Punong Barangay",
+    "hall": "Barangay hall",
+    "hotline": "Hotline",
+    "psgc": "PSGC code"
+  },
+  "transparency": {
+    "lead": "Mga pampublikong dokumento tungkol sa plano at gastos ng munisipyo.",
+    "budgetNote": "Ang budget data ng mga lokal na pamahalaan, kung mayroon, ay nasa pampublikong budget portal ng BetterGov.",
+    "budgetLink": "Buksan ang budget.bettergov.ph",
+    "categories": {
+      "budget": "Budget",
+      "procurement": "Procurement",
+      "ordinance": "Mga ordinansa",
+      "report": "Mga ulat"
+    }
+  },
+  "tourism": {
+    "lead": "Mga beach, trail, pamanang pook at kainan sa Ternate.",
+    "categories": {
+      "beach": "Beach",
+      "nature": "Kalikasan",
+      "heritage": "Pamana",
+      "food": "Pagkain",
+      "landmark": "Palatandaan"
+    },
+    "openMap": "Buksan sa OpenStreetMap",
+    "map": "Mapa",
+    "osmContributors": "contributors"
+  },
+  "news": {
+    "lead": "Mga abiso, anunsyo at kaganapan.",
+    "categories": {
+      "advisory": "Abiso",
+      "announcement": "Anunsyo",
+      "event": "Kaganapan"
+    },
+    "source": "Orihinal na pinagmulan"
+  },
+  "about": {
+    "lead": "Ano ang site na ito, saan galing ang impormasyon, at paano tumulong.",
+    "purposeTitle": "Layunin",
+    "purpose": "Ang Better Ternate ay gabay na pinapatakbo ng mga boluntaryo. Inaayos nito ang impormasyon ng lokal na pamahalaan ayon sa kailangan mong gawin, tulad ng pagkuha ng barangay clearance o paghahanap ng numero para sa emergency, sa English at Filipino.",
+    "officialTitle": "Mga opisyal na channel",
+    "official": "Para sa opisyal na transaksyon at anunsyo, laging dumiretso sa munisipyo:",
+    "officialHall": "Ang Ternate Municipal Hall at ang inyong barangay hall, nang personal",
+    "officialHotlines": "Mga hotline para sa emergency at tanggapan",
+    "officialGovPh": "GOV.PH, ang pambansang portal ng pamahalaan",
+    "officialPending": "Idaragdag dito ang mga link sa sariling website at social media ng munisipyo kapag na-beripika na ng mga boluntaryo.",
+    "sourcesTitle": "Pinagmulan ng datos",
+    "sources": "Tinipon ng mga boluntaryo ang impormasyon mula sa mga pampublikong mapagkukunan. Ang mga talang may “Sample data” ay pansamantala lamang at hindi dapat asahan.",
+    "sourcePsgc": "Pangalan at code ng barangay: Philippine Standard Geographic Code (PSGC)",
+    "sourceVolunteers": "Serbisyo, tanggapan at hotline: pananaliksik ng mga boluntaryo, susuriin pa laban sa opisyal na mapagkukunan",
+    "sourceOsm": "Mapa: © OpenStreetMap contributors",
+    "contributeTitle": "Paano tumulong",
+    "contribute": "Kahit sino ay puwedeng magmungkahi ng pagwawasto o magdagdag ng impormasyon. Nasa simpleng file sa GitHub ang nilalaman at sinusuri ang bawat pagbabago bago ilabas.",
+    "privacyTitle": "Abiso sa privacy",
+    "privacyIntro": "Sinusunod namin ang Data Privacy Act of 2012 (Republic Act No. 10173) at kumukuha lamang ng pinakakaunting impormasyon.",
+    "privacyStorage": "Ang napili mong wika at tema ay naka-save lamang sa sarili mong browser. Wala kaming tracking cookie o ads.",
+    "privacyForms": "Kung magpapadala ka ng mensahe o feedback, itatago lamang namin ang iyong ipinadala, gagamitin lamang ito para sumagot o ayusin ang site, at buburahin kapag hindi na kailangan.",
+    "privacyThirdParty": "Kumukuha ang mapa ng tiles mula sa OpenStreetMap, na nakikita ang iyong IP address.",
+    "privacyRights": "Maaari kang humiling na makita, itama o burahin ang impormasyong ipinadala mo sa amin sa pamamagitan ng contact page."
+  },
+  "search": {
+    "title": "Maghanap",
+    "label": "Maghanap sa Better Ternate",
+    "close": "Isara ang paghahanap",
+    "results": "Mga resulta",
+    "loading": "Naglo-load…",
+    "failed": "Hindi available ang paghahanap ngayon. Tingnan ang iyong koneksyon at subukang muli.",
+    "count_one": "{{count}} resulta",
+    "count_other": "{{count}} resulta",
+    "hint": "Mag-type para maghanap. ↑ ↓ para lumipat, Enter para buksan, Esc para isara.",
+    "types": {
+      "service": "Serbisyo",
+      "hotline": "Hotline",
+      "office": "Tanggapan",
+      "barangay": "Barangay",
+      "news": "Balita",
+      "tourism": "Turismo"
+    }
+  },
+  "offline": {
+    "banner": "Offline ka. Nakikita mo ang naka-save na impormasyon; maaaring luma na ito."
   },
   "pages": {
     "services": "Mga Serbisyo",

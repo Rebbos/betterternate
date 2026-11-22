@@ -1,8 +1,10 @@
 import { expect, test } from 'vitest'
 import { parseMarkdownFile } from '../../scripts/markdown'
 import {
+  getActiveAdvisory,
   getBarangay,
   getBarangays,
+  getDocuments,
   getHotlines,
   getNewsPost,
   getNewsPosts,
@@ -32,6 +34,7 @@ test('every placeholder person/contact record is flagged sample', () => {
     ...getOfficials(),
     ...getBarangays(),
     ...getTourismSpots(),
+    ...getDocuments(),
   ]
   expect(all.every((r) => r.sample === true)).toBe(true)
 })
@@ -47,6 +50,11 @@ test('news is newest first and slugged by filename', () => {
   const dates = getNewsPosts().map((n) => n.date)
   expect(dates).toEqual([...dates].sort().reverse())
   expect(getNewsPost('2026-11-01-sample-town-event')?.html).toContain('<table>')
+})
+
+test('advisory banner shows only unexpired advisories', () => {
+  expect(getActiveAdvisory('2026-11-22')?.slug).toBe('2026-11-20-sample-office-hours-advisory')
+  expect(getActiveAdvisory('2027-01-01')).toBeUndefined()
 })
 
 test('barangay lookup by slug', () => {

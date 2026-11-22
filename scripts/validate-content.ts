@@ -8,6 +8,7 @@ import { basename, join, resolve } from 'node:path'
 import { z } from 'zod'
 import {
   barangaySchema,
+  documentSchema,
   hotlineSchema,
   newsPostSchema,
   officeSchema,
@@ -60,6 +61,7 @@ const officials = check('data/officials.json', z.array(officialSchema), readJson
 const barangays = check('data/barangays.json', z.array(barangaySchema), readJson('barangays')) ?? []
 const tourism = check('data/tourism.json', z.array(tourismSpotSchema), readJson('tourism')) ?? []
 check('data/hotlines.json', z.array(hotlineSchema), readJson('hotlines'))
+check('data/documents.json', z.array(documentSchema), readJson('documents'))
 
 uniqueSlugs('data/offices.json', offices)
 uniqueSlugs('data/barangays.json', barangays)

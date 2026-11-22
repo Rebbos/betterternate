@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Container, Section } from '@/components/ui/Container'
+import { usePageMeta } from '@/hooks/usePageMeta'
 
 /** Temporary page body until Phase 4 builds the real page. */
 export default function PagePlaceholder({
@@ -10,6 +11,7 @@ export default function PagePlaceholder({
   detail?: string
 }) {
   const { t } = useTranslation()
+  usePageMeta(t(titleKey))
   return (
     <Container>
       <Section>

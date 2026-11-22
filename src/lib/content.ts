@@ -1,4 +1,13 @@
-import type { Barangay, Hotline, NewsPost, Office, Official, Service, TourismSpot } from './schemas'
+import type {
+  Barangay,
+  Hotline,
+  NewsPost,
+  Office,
+  Official,
+  PublicDocument,
+  Service,
+  TourismSpot,
+} from './schemas'
 
 /*
  * Content is validated against the zod schemas at build time (npm run validate:content,
@@ -42,3 +51,8 @@ export const getOffice = (slug: string) => getOffices().find((o) => o.slug === s
 export const getBarangays = () => data<Barangay>('barangays')
 export const getBarangay = (slug: string) => getBarangays().find((b) => b.slug === slug)
 export const getTourismSpots = () => data<TourismSpot>('tourism')
+export const getDocuments = () => data<PublicDocument>('documents')
+
+/** Newest advisory whose `expires` date (YYYY-MM-DD) is today or later. */
+export const getActiveAdvisory = (today = new Date().toISOString().slice(0, 10)) =>
+  news.find((n) => n.category === 'advisory' && n.expires && n.expires >= today)

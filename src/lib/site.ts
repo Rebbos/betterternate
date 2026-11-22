@@ -1,5 +1,7 @@
 export const REPO_URL = 'https://github.com/Rebbos/betterternate'
 export const REPORT_URL = `${REPO_URL}/issues/new?template=data_correction.md`
+export const BUDGET_URL = 'https://budget.bettergov.ph'
+export const OSM_COPYRIGHT_URL = 'https://www.openstreetmap.org/copyright'
 
 /** Site navigation. `primary` items show in the desktop header; all show in drawer + footer. */
 export const NAV_ITEMS = [

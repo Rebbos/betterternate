@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Annual Budget (sample)",
+    "category": "budget",
+    "year": 2026,
+    "url": "https://example.com/sample-document",
+    "sample": true
+  },
+  {
+    "title": "Annual Investment Program (sample)",
+    "category": "budget",
+    "year": 2026,
+    "url": "https://example.com/sample-document",
+    "sample": true
+  },
+  {
+    "title": "Bids and Awards notices (sample)",
+    "category": "procurement",
+    "year": 2026,
+    "url": "https://example.com/sample-document",
+    "sample": true
+  },
+  {
+    "title": "Municipal ordinances index (sample)",
+    "category": "ordinance",
+    "year": 2025,
+    "url": "https://example.com/sample-document",
+    "sample": true
+  },
+  {
+    "title": "Full Disclosure Policy report (sample)",
+    "category": "report",
+    "year": 2025,
+    "url": "https://example.com/sample-document",
+    "sample": true
+  }
+]

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { DOCUMENT_CATEGORIES, HOTLINE_TYPES, SERVICE_CATEGORIES } from './categories'
 
 /** Placeholder record (John Doe / sample values) still waiting for real, verified data. */
 const sample = z.boolean().optional()
@@ -9,18 +10,7 @@ const isoDate = z.iso.date() // YYYY-MM-DD
 const httpUrl = z.url({ protocol: /^https?$/ })
 const phone = z.string().regex(/^[0-9+\-() ]{3,20}$/, 'digits, spaces, + - ( ) only')
 
-export const SERVICE_CATEGORIES = [
-  'business',
-  'civil-registry',
-  'health',
-  'social-welfare',
-  'taxes-payments',
-  'permits',
-  'agriculture-fisheries',
-  'education',
-  'waste-management',
-  'disaster-preparedness',
-] as const
+export { SERVICE_CATEGORIES }
 
 export const serviceSchema = z.object({
   slug,
@@ -35,6 +25,8 @@ export const serviceSchema = z.object({
   schedule: text,
   last_verified: isoDate,
   source_url: httpUrl,
+  /** Extra search terms (synonyms, Filipino words) not already in the titles. */
+  keywords: z.array(text).optional(),
   sample,
 })
 
@@ -42,7 +34,7 @@ export const hotlineSchema = z.object({
   name: text,
   agency: text,
   numbers: z.array(phone).min(1),
-  type: z.enum(['emergency', 'health', 'utility', 'barangay']),
+  type: z.enum(HOTLINE_TYPES),
   available_24_7: z.boolean(),
   sample,
 })
@@ -99,6 +91,16 @@ export const newsPostSchema = z.object({
   category: z.enum(['advisory', 'announcement', 'event']),
   summary: text,
   source_url: httpUrl.optional(),
+  /** Advisories with a future `expires` date show in the home page banner. */
+  expires: isoDate.optional(),
+  sample,
+})
+
+export const documentSchema = z.object({
+  title: text,
+  category: z.enum(DOCUMENT_CATEGORIES),
+  year: z.number().int().min(1990).max(2100),
+  url: httpUrl,
   sample,
 })
 
@@ -109,3 +111,4 @@ export type Office = z.infer<typeof officeSchema>
 export type Barangay = z.infer<typeof barangaySchema>
 export type TourismSpot = z.infer<typeof tourismSpotSchema>
 export type NewsPost = z.infer<typeof newsPostSchema>
+export type PublicDocument = z.infer<typeof documentSchema>
