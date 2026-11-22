@@ -1,6 +1,6 @@
 /**
  * Form schemas shared by the browser (src/components/forms) and the server
- * (functions/api). Keep this file free of DOM and Workers APIs.
+ * (api/). Keep this file free of DOM and server-only APIs.
  */
 import { z } from 'zod'
 

@@ -1,45 +1,157 @@
 # Better Ternate
 
-Community-run, **unofficial** information portal for the Municipality of Ternate, Cavite.
-This is NOT the official website of the Municipality of Ternate.
+A community-run, **unofficial** information portal for the Municipality of Ternate, Cavite,
+Philippines. It organizes local government information by what people need to do
+("Get a barangay clearance", "Call the fire station") in English and Filipino, and works
+well on cheap Android phones on slow mobile data, even offline for hotlines.
 
-## Quick start
+> **This is NOT the official website of the Municipality of Ternate.** Every page says so
+> and links to official channels. Most content is currently **sample data**: names are
+> "John Doe" placeholders and every placeholder record is marked `"sample": true`.
+
+Inspired by [BetterGov.ph](https://bettergov.ph) and its LGU forks, with its own visual
+identity.
+
+## Stack
+
+| Area     | Choice                                                                     |
+| -------- | -------------------------------------------------------------------------- |
+| App      | React 19, TypeScript, Vite, React Router (lazy routes)                     |
+| Styling  | Tailwind CSS v4 driven entirely by design tokens (`src/styles/tokens.css`) |
+| Language | react-i18next, English + Filipino (`src/i18n/locales`)                     |
+| Content  | Markdown + JSON in `/content`, validated with zod at build time            |
+| Search   | fuse.js over a prebuilt index; works offline                               |
+| Offline  | Service worker (vite-plugin-pwa) precaches the app, content and search     |
+| Hosting  | Vercel (static site + Vercel Functions in `/api`)                          |
+| Forms    | Cloudflare Turnstile (verified server-side) → Postgres (Neon via Vercel)   |
+| Tests    | Vitest + Testing Library, Playwright + axe, Lighthouse CI                  |
+
+## Local setup
+
+Requires Node 22+.
 
 ```sh
 npm install
-cp .env.example .env.local      # Turnstile test site key (public)
-cp .dev.vars.example .dev.vars  # Turnstile test secret
-npm run dev                     # http://localhost:5173 (site only)
+cp .env.example .env.local   # test keys; works without any accounts
+npm run dev                  # http://localhost:5173 (site AND /api)
 ```
 
-## Forms and backend (contact + page feedback)
+`npm run dev` also runs the form API (`/api/*`) locally. Without `DATABASE_URL`, submitted
+forms are **logged to the terminal instead of stored**, so you don't need a database to
+work on the site.
 
-The forms post to Cloudflare Pages Functions (`functions/api`), which verify Cloudflare
-Turnstile server-side and store submissions in D1.
+### Environment variables
 
-```sh
-npm run db:migrate:local   # once: creates the local D1 table
-npm run pages:dev          # builds, then serves site + /api on http://localhost:8788
-npm run dev                # optional, in a 2nd terminal: Vite on :5173 proxies /api to :8788
+| Name                      | Where       | Purpose                                           |
+| ------------------------- | ----------- | ------------------------------------------------- |
+| `VITE_TURNSTILE_SITE_KEY` | browser     | Turnstile site key (public)                       |
+| `TURNSTILE_SECRET_KEY`    | server only | Turnstile secret, used by `/api` to verify tokens |
+| `DATABASE_URL`            | server only | Postgres connection string; optional locally      |
+
+`.env.example` ships Cloudflare's published **always-pass test keys**
+(`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA`): the widget passes
+without interaction and siteverify always says yes. Useful variants: `2x…` keys always
+fail, `3x…` force an interactive challenge. **Never deploy with test keys**: that turns
+bot protection off.
+
+### Scripts
+
+| Command                    | What it does                                                      |
+| -------------------------- | ----------------------------------------------------------------- |
+| `npm run dev`              | Dev server with hot reload + local `/api`                         |
+| `npm run build`            | Validate content → build search index → typecheck → build         |
+| `npm run preview`          | Serve the production build (service worker active)                |
+| `npm run validate:content` | Check everything in `/content` against the schemas                |
+| `npm run lint` / `format`  | ESLint / Prettier                                                 |
+| `npm run typecheck`        | TypeScript                                                        |
+| `npm test`                 | Unit + API tests (Vitest)                                         |
+| `npm run test:e2e`         | Browser tests at 4 viewports + axe accessibility (Playwright)     |
+| `npm run lhci`             | Lighthouse CI with mobile budgets (needs Chrome or `CHROME_PATH`) |
+| `npm run db:migrate`       | Apply `migrations/*.sql` to `DATABASE_URL`                        |
+
+## Deploying to Vercel (one-time setup)
+
+Deploys use **Vercel's Git integration**: every push to `main` deploys to production, and
+every pull request gets its own preview URL. GitHub Actions (`.github/workflows/ci.yml`)
+runs all the tests on each PR.
+
+1. **Import the repo:** in Vercel, choose _Add New → Project_ and import this GitHub repo.
+   Build settings come from `vercel.json`, so leave them as they are.
+2. **Add a database:** under the project's _Storage_ tab, add **Neon** (Postgres) from the
+   Marketplace and connect it to the project. This sets `DATABASE_URL` for you.
+3. **Create the table:** copy the Neon connection string into your local `.env.local` as
+   `DATABASE_URL`, then run:
+   ```sh
+   npm run db:migrate
+   ```
+   Run it again whenever a new file appears in `migrations/`. It only applies new ones.
+4. **Turnstile:** in the Cloudflare dashboard, go to _Turnstile → Add widget_ and add your
+   Vercel domain(s). In Vercel → _Settings → Environment Variables_, add:
+   - `VITE_TURNSTILE_SITE_KEY`: the site key (needed at **build** time)
+   - `TURNSTILE_SECRET_KEY`: the secret key (mark it **Sensitive**)
+5. **Redeploy** so the build picks up the variables.
+
+**Check after deploying:**
+
+- `https://<your-domain>/api/health` returns `{"ok":true}`.
+- Sending the contact form once works.
+- This returns **403**:
+  ```sh
+  curl -X POST https://<your-domain>/api/contact -H 'Content-Type: application/json' -d '{}'
+  ```
+
+**Reading submissions:** use Neon's SQL editor:
+`SELECT * FROM submissions ORDER BY created_at DESC;`
+
+Security headers (CSP, nosniff, frame and permissions policies) and the SPA fallback are in
+`vercel.json`.
+
+## Project structure
+
+```
+api/                 Vercel Functions: contact.ts, feedback.ts, health.ts
+server/              Shared server code: submit handler (Turnstile + zod), db.ts
+content/             Volunteer-editable data
+  data/*.json          hotlines, offices, officials, barangays, tourism, documents
+  services/*.md        one file per service (frontmatter + notes)
+  news/*.md            YYYY-MM-DD-slug.md
+migrations/          Postgres schema (applied with npm run db:migrate)
+public/              Static files: icons, manifest, theme-init.js, robots.txt
+scripts/             validate-content, build-search-index, db-migrate, make-icons
+src/
+  components/ui/       Primitives (Button, Card, Badge, Alert, form controls…)
+  components/layout/   Header, footer, nav, disclaimer, logo art
+  components/forms/    Contact form, feedback widget, Turnstile
+  components/search/   Search dialog
+  i18n/locales/        en.json, fil.json (ALL UI text)
+  lib/                 schemas (zod), content loaders, search, forms, formatting
+  routes/              One file per page
+  styles/              tokens.css (design tokens), index.css
+tests/
+  unit/                Vitest: components, content, schemas, search, i18n
+  api/                 Vitest: API handlers (mocked Turnstile + database)
+  e2e/                 Playwright: pages, navigation, search, forms, offline
 ```
 
-The example keys are Cloudflare's always-pass test keys, so forms work locally without an
-account. Read submissions locally:
+## How theming works
 
-```sh
-npx wrangler d1 execute better-ternate --local --command "SELECT * FROM submissions"
-```
+All visual values live in **`src/styles/tokens.css`** as CSS variables (`--bt-*`): colors,
+fonts, radii, shadows and the 44px tap size, with light and dark values. `@theme inline`
+maps them to Tailwind utilities (`bg-surface`, `text-primary`, `rounded-lg`…).
 
-### Production setup (one time)
+Tailwind's own palette, radii, shadows and fonts are **switched off**, so components can't
+hard-code a color: `bg-red-500` simply doesn't exist. To restyle the whole site, edit the
+values in `tokens.css`. Keep text and background pairs at WCAG AA contrast (4.5:1) in
+both modes.
 
-1. `npx wrangler d1 create better-ternate` and paste the `database_id` into `wrangler.toml`.
-2. `npm run db:migrate:remote`
-3. Create a Turnstile widget in the Cloudflare dashboard for your domain, then:
-   - set `VITE_TURNSTILE_SITE_KEY` (the public site key) as a Pages build environment variable
-   - `npx wrangler pages secret put TURNSTILE_SECRET_KEY` (never commit it)
+The current design is "Dagat" (coastal): sea teal on sand, Bricolage Grotesque headings
+(self-hosted) with the phone's system font for body text.
 
-Security headers (CSP etc.) for all pages are in `public/_headers`.
+## Contributing
 
-Scripts: `lint`, `format`, `typecheck`, `test`, `test:e2e`, `validate:content`, `build:search`.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Found wrong information but don't code? Use the
+**Report outdated info** link on any page, or open a _Data correction_ issue.
 
-Full docs come in Phase 9. Code: MIT. `/content`: CC BY 4.0.
+## License
+
+Code: MIT. Content in `/content`: CC BY 4.0. See [LICENSE](LICENSE).

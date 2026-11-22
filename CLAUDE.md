@@ -20,7 +20,8 @@ website of the Municipality of Ternate and links to official channels.
   Better Ternate has its own visual identity (inspired by BetterGov.ph, not styled like it)
 - react-i18next (English + Filipino), lucide-react icons, fuse.js search, zod schemas
 - Content as JSON + Markdown in /content (edited by volunteers via PR)
-- Cloudflare Pages (hosting) + Pages Functions (/functions) + D1 (form storage)
+- Vercel (hosting, Git integration deploys) + Vercel Functions (/api) + Postgres via
+  Neon from the Vercel Marketplace (form storage). Security headers in vercel.json.
 - Cloudflare Turnstile on all public forms, verified server-side
 - Vitest + React Testing Library, Playwright (+ @axe-core/playwright)
 - ESLint, Prettier, Husky + lint-staged, GitHub Actions
@@ -48,7 +49,7 @@ placeholders (rule 5) when borrowing content.
    - Phone: "0900-000-0000"   Email: "johndoe@example.com"
    - Address: "123 Sample St., Ternate, Cavite"   Fees: "₱0.00 (sample)"
    Every placeholder record has "sample": true so it can be found and replaced later.
-6. Never commit secrets. Use .env / .dev.vars and provide *.example files.
+6. Never commit secrets. Use .env.local (gitignored) and keep .env.example up to date.
 7. After each task run: npm run lint && npm run typecheck && npm test. Fix failures.
 8. Stop at the end of each phase and report: what was built, files changed, how to
    check it, and open questions. Do not start the next phase unless asked.

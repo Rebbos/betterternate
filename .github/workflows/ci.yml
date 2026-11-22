@@ -1,0 +1,55 @@
+# Runs on every PR (and on main): the same checks as locally, plus browser tests and Lighthouse.
+# Deploys are handled by Vercel's Git integration, not here.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Cloudflare's public always-pass TEST key; browser tests stub Turnstile anyway.
+      VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Content (catches bad volunteer edits early)
+        run: npm run validate:content
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Unit + API tests
+        run: npm test
+      - name: Build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests (4 viewports) + axe accessibility
+        run: npx playwright test
+      - name: Lighthouse CI (mobile budgets)
+        run: |
+          export CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")
+          npx lhci autorun
+
+      - name: Upload reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            playwright-report
+            .lighthouseci
+          retention-days: 7

@@ -1,23 +1,10 @@
 /**
- * Shared handler for public form endpoints (functions/api/contact.ts, feedback.ts).
- * Lives outside /functions so Pages doesn't turn it into a route.
+ * Shared handler for the public form endpoints (api/contact.ts, api/feedback.ts).
+ * Lives outside /api so Vercel doesn't turn it into a route.
  */
 import type { z } from 'zod'
 import { HONEYPOT, TOKEN_FIELD } from '../src/lib/forms'
-
-export interface Env {
-  DB: D1Database
-  TURNSTILE_SECRET_KEY: string
-}
-
-export type Row = {
-  type: 'contact' | 'feedback'
-  category: string
-  message: string
-  name?: string
-  email?: string
-  page_url?: string
-}
+import { insertSubmission, type Row } from './db'
 
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const MAX_BODY_BYTES = 16 * 1024
@@ -37,49 +24,50 @@ export async function verifyTurnstile(token: string, secret: string, ip: string 
     const data: { success?: boolean } = await res.json()
     return data.success === true
   } catch {
-    return false
+    return false // fail closed: if Cloudflare can't be reached, nothing gets in
   }
 }
 
+/** Builds a POST handler: size → JSON → honeypot → Turnstile → schema → store. */
 export function handleSubmission<S extends z.ZodType>(
   schema: S,
   toRow: (data: z.output<S>) => Row,
-): PagesFunction<Env> {
-  return async ({ request, env }) => {
-    if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES)
-      return fail(413, 'too_large')
-
-    let body: Record<string, unknown>
+) {
+  return async (request: Request): Promise<Response> => {
     try {
-      const parsed: unknown = await request.json()
-      if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) throw 0
-      body = parsed as Record<string, unknown>
-    } catch {
-      return fail(400, 'invalid_json')
+      if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES)
+        return fail(413, 'too_large')
+
+      let body: Record<string, unknown>
+      try {
+        const parsed: unknown = await request.json()
+        if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) throw 0
+        body = parsed as Record<string, unknown>
+      } catch {
+        return fail(400, 'invalid_json')
+      }
+
+      const { [TOKEN_FIELD]: token, [HONEYPOT]: honeypot, ...fields } = body
+      if (honeypot) return fail(400, 'rejected')
+      if (typeof token !== 'string' || !token) return fail(403, 'verification_failed')
+      const secret = process.env.TURNSTILE_SECRET_KEY
+      if (!secret) return fail(500, 'misconfigured')
+
+      // Vercel sets x-real-ip to the visitor's IP.
+      const ip = request.headers.get('x-real-ip')
+      if (!(await verifyTurnstile(token, secret, ip))) return fail(403, 'verification_failed')
+
+      const result = schema.safeParse(fields)
+      if (!result.success)
+        return fail(400, 'invalid', {
+          fields: [...new Set(result.error.issues.map((i) => i.path[0]))],
+        })
+
+      await insertSubmission(toRow(result.data))
+      return Response.json({ ok: true })
+    } catch (e) {
+      console.error(e)
+      return fail(500, 'server_error')
     }
-
-    const { [TOKEN_FIELD]: token, [HONEYPOT]: honeypot, ...fields } = body
-    if (honeypot) return fail(400, 'rejected')
-    if (typeof token !== 'string' || !token) return fail(403, 'verification_failed')
-    if (!env.TURNSTILE_SECRET_KEY) return fail(500, 'misconfigured')
-
-    const ip = request.headers.get('CF-Connecting-IP')
-    if (!(await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, ip)))
-      return fail(403, 'verification_failed')
-
-    const result = schema.safeParse(fields)
-    if (!result.success)
-      return fail(400, 'invalid', {
-        fields: [...new Set(result.error.issues.map((i) => i.path[0]))],
-      })
-
-    const r = toRow(result.data)
-    await env.DB.prepare(
-      'INSERT INTO submissions (type, category, message, name, email, page_url) VALUES (?, ?, ?, ?, ?, ?)',
-    )
-      .bind(r.type, r.category, r.message, r.name ?? null, r.email ?? null, r.page_url ?? null)
-      .run()
-
-    return Response.json({ ok: true })
   }
 }
