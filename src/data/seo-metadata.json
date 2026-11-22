@@ -1,0 +1,118 @@
+{
+  "en": {
+    "home": {
+      "title": "Better Ternate",
+      "description": "Unofficial community guide to local services, offices, barangays, hotlines, and public information in Ternate, Cavite."
+    },
+    "services": {
+      "title": "Government Services",
+      "description": "Find step-by-step guides for barangay clearances, certificates, permits, taxes, and assistance in Ternate."
+    },
+    "service-detail": {
+      "title": "Government Service",
+      "description": "View requirements, steps, fees, office hours, and filing information for this Ternate government service."
+    },
+    "hotlines": {
+      "title": "Emergency and Help Hotlines",
+      "description": "Call emergency, disaster, police, fire, health, utility, and barangay hotlines for Ternate."
+    },
+    "government": {
+      "title": "Government Offices",
+      "description": "Find Ternate municipal offices, public officials, services, contact details, and office information."
+    },
+    "barangays": {
+      "title": "Barangays",
+      "description": "Explore the barangays of Ternate, Cavite, including halls, captains, hotlines, and reporting information."
+    },
+    "barangay-detail": {
+      "title": "Ternate Barangay",
+      "description": "View barangay hall, local contact, captain, hotline, and PSGC information for this Ternate barangay."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "description": "Browse public documents, budget information, and transparency records for Ternate."
+    },
+    "tourism": {
+      "title": "Tourism",
+      "description": "Discover places, beaches, heritage sites, nature trails, and local attractions in Ternate, Cavite."
+    },
+    "news": {
+      "title": "News and Advisories",
+      "description": "Read community news, public advisories, office notices, and announcements for Ternate."
+    },
+    "news-detail": {
+      "title": "Ternate News",
+      "description": "Read this community news post or public advisory from Better Ternate."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Send feedback or report outdated information to the Better Ternate community portal."
+    },
+    "about": {
+      "title": "About",
+      "description": "Learn about Better Ternate, our volunteer-run community project, and data sourcing."
+    },
+    "not-found": {
+      "title": "Page Not Found",
+      "description": "The page you requested could not be found on the Better Ternate community portal."
+    }
+  },
+  "fil": {
+    "home": {
+      "title": "Better Ternate",
+      "description": "Hindi opisyal na gabay sa mga serbisyong lokal, tanggapan, barangay, hotline, at pampublikong impormasyon sa Ternate, Cavite."
+    },
+    "services": {
+      "title": "Mga Serbisyong Pang-gobyerno",
+      "description": "Humanap ng hakbang-hakbang na gabay sa barangay clearance, sertipiko, permit, buwis, at tulong sa Ternate."
+    },
+    "service-detail": {
+      "title": "Serbisyong Pang-gobyerno",
+      "description": "Tingnan ang kailangan, hakbang, bayarin, oras ng opisina, at filing information para sa serbisyong ito sa Ternate."
+    },
+    "hotlines": {
+      "title": "Emergency at Tulong na Hotline",
+      "description": "Tumawag sa emergency, disaster, pulisya, bumbero, kalusugan, utility, at barangay na hotline sa Ternate."
+    },
+    "government": {
+      "title": "Mga Tanggapan ng Pamahalaan",
+      "description": "Humanap ng mga tanggapan ng Ternate, opisyal, serbisyo, contact detail, at impormasyon ng opisina."
+    },
+    "barangays": {
+      "title": "Mga Barangay",
+      "description": "Tuklasin ang mga barangay ng Ternate, Cavite, kasama ang hall, kapitan, hotline, at reporting information."
+    },
+    "barangay-detail": {
+      "title": "Barangay sa Ternate",
+      "description": "Tingnan ang barangay hall, lokal na contact, kapitan, hotline, at PSGC information ng barangay na ito."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "description": "Tingnan ang pampublikong dokumento, impormasyon sa budget, at transparency records ng Ternate."
+    },
+    "tourism": {
+      "title": "Turismo",
+      "description": "Tuklasin ang mga beach, pamana, nature trail, at lokal na atraksyon sa Ternate, Cavite."
+    },
+    "news": {
+      "title": "Balita at Abiso",
+      "description": "Basahin ang balita ng komunidad, pampublikong abiso, paunawa ng opisina, at anunsyo para sa Ternate."
+    },
+    "news-detail": {
+      "title": "Balita sa Ternate",
+      "description": "Basahin ang post ng komunidad o pampublikong abiso mula sa Better Ternate."
+    },
+    "contact": {
+      "title": "Makipag-ugnayan",
+      "description": "Magpadala ng feedback o i-report ang lumang impormasyon sa community portal ng Better Ternate."
+    },
+    "about": {
+      "title": "Tungkol sa Amin",
+      "description": "Alamin ang tungkol sa Better Ternate, aming volunteer-run na proyekto, at pinagmulan ng datos."
+    },
+    "not-found": {
+      "title": "Hindi Natagpuan ang Pahina",
+      "description": "Hindi makita ang pahinang hinahanap mo sa community portal ng Better Ternate."
+    }
+  }
+}

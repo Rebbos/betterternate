@@ -33,7 +33,11 @@ test.each([
 ])('%s renders "%s" and sets the page title', async (path, h1) => {
   renderAt(path)
   expect(await screen.findByRole('heading', { level: 1, name: h1 })).toBeInTheDocument()
-  expect(document.title).toBe(`${h1} · Better Ternate`)
+  expect(document.title).toBe(`${h1} — Better Ternate`)
+  expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    `http://localhost:3000${path}`,
+  )
 })
 
 test('service detail shows sample fee, office, last verified, report link', async () => {
