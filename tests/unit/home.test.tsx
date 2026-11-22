@@ -9,6 +9,18 @@ const renderAt = (path: string) =>
 test('home has hero search, quick actions, latest news', async () => {
   renderAt('/')
   expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Better Ternate')
+  expect(document.querySelector('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    'https://betterternate.netlify.app/share-image.png',
+  )
+  expect(document.querySelector('meta[name="twitter:card"]')).toHaveAttribute(
+    'content',
+    'summary_large_image',
+  )
+  expect(document.querySelector('meta[property="og:title"]')).toHaveAttribute(
+    'content',
+    'Introducing Better Ternate',
+  )
   expect(screen.getByRole('searchbox', { name: 'What do you need?' })).toBeInTheDocument()
   const quick = within(screen.getByRole('region', { name: 'Quick links' }))
   for (const name of ['Services', 'Hotlines', 'Government', 'Tourism', 'Transparency'])
@@ -36,7 +48,7 @@ test.each([
   expect(document.title).toBe(`${h1} — Better Ternate`)
   expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    `http://localhost:3000${path}`,
+    `https://betterternate.netlify.app${path}`,
   )
 })
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import seoMetadata from '@/data/seo-metadata.json'
+import { PRODUCTION_URL } from '@/lib/site'
 
 function setMeta(attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`)
@@ -83,12 +84,36 @@ export function usePageMeta(title?: string, description?: string) {
   const desc = descriptionWithinLimit(rawDescription)
 
   useEffect(() => {
+    const canonicalUrl = `${PRODUCTION_URL}${routeLocation.pathname}`
+    const socialTitle = route === 'home' ? 'Introducing Better Ternate' : fullTitle
+
     document.title = fullTitle
     document.documentElement.lang = lang
     setMeta('name', 'description', desc)
-    setMeta('property', 'og:title', fullTitle)
+    setMeta('property', 'og:title', socialTitle)
     setMeta('property', 'og:description', desc)
-    setMeta('property', 'og:url', `${location.origin}${routeLocation.pathname}`)
-    setLinkRel('canonical', `${location.origin}${routeLocation.pathname}`)
-  }, [fullTitle, desc, lang, routeLocation.pathname])
+    setMeta('property', 'og:url', canonicalUrl)
+    setMeta('property', 'og:type', 'website')
+    setMeta('property', 'og:site_name', site)
+    setMeta('property', 'og:locale', lang === 'fil' ? 'fil_PH' : 'en_PH')
+    setMeta('property', 'og:image', `${PRODUCTION_URL}/share-image.png`)
+    setMeta('property', 'og:image:width', '1200')
+    setMeta('property', 'og:image:height', '630')
+    setMeta('property', 'og:image:type', 'image/png')
+    setMeta(
+      'property',
+      'og:image:alt',
+      'Better Ternate community portal - Unofficial community site',
+    )
+    setMeta('name', 'twitter:card', 'summary_large_image')
+    setMeta('name', 'twitter:title', socialTitle)
+    setMeta('name', 'twitter:description', desc)
+    setMeta('name', 'twitter:image', `${PRODUCTION_URL}/share-image.png`)
+    setMeta(
+      'name',
+      'twitter:image:alt',
+      'Better Ternate community portal - Unofficial community site',
+    )
+    setLinkRel('canonical', canonicalUrl)
+  }, [fullTitle, desc, lang, route, routeLocation.pathname, site])
 }
