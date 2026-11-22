@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "name": "Disaster Risk Reduction and Management Office",
+    "agency": "MDRRMO Ternate (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "emergency",
+    "available_24_7": true,
+    "sample": true
+  },
+  {
+    "name": "Police Station",
+    "agency": "PNP Ternate (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "emergency",
+    "available_24_7": true,
+    "sample": true
+  },
+  {
+    "name": "Fire Station",
+    "agency": "BFP Ternate (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "emergency",
+    "available_24_7": true,
+    "sample": true
+  },
+  {
+    "name": "Rural Health Unit",
+    "agency": "Municipal Health Office (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "health",
+    "available_24_7": false,
+    "sample": true
+  },
+  {
+    "name": "Electric Utility Hotline",
+    "agency": "Power distributor (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "utility",
+    "available_24_7": true,
+    "sample": true
+  },
+  {
+    "name": "Water Utility Hotline",
+    "agency": "Water district (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "utility",
+    "available_24_7": false,
+    "sample": true
+  },
+  {
+    "name": "Barangay Hall Hotline",
+    "agency": "Your barangay (sample)",
+    "numbers": ["0900-000-0000"],
+    "type": "barangay",
+    "available_24_7": false,
+    "sample": true
+  }
+]

@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "slug": "sample-beach",
+    "name": "Sample Beach",
+    "category": "beach",
+    "description_en": "Placeholder description for a beach in Ternate. Replace with verified details.",
+    "description_fil": "Pansamantalang paglalarawan ng isang beach sa Ternate. Palitan ng beripikadong detalye.",
+    "lat": 14.29,
+    "lng": 120.7,
+    "sample": true
+  },
+  {
+    "slug": "sample-mountain-trail",
+    "name": "Sample Mountain Trail",
+    "category": "nature",
+    "description_en": "Placeholder description for a hiking trail. Replace with verified details.",
+    "description_fil": "Pansamantalang paglalarawan ng isang hiking trail. Palitan ng beripikadong detalye.",
+    "lat": 14.24,
+    "lng": 120.73,
+    "sample": true
+  },
+  {
+    "slug": "sample-heritage-site",
+    "name": "Sample Heritage Site",
+    "category": "heritage",
+    "description_en": "Placeholder description for a heritage site. Replace with verified details.",
+    "description_fil": "Pansamantalang paglalarawan ng isang pamanang pook. Palitan ng beripikadong detalye.",
+    "lat": 14.29,
+    "lng": 120.72,
+    "sample": true
+  },
+  {
+    "slug": "sample-seafood-market",
+    "name": "Sample Seafood Market",
+    "category": "food",
+    "description_en": "Placeholder description for a local seafood spot. Replace with verified details.",
+    "description_fil": "Pansamantalang paglalarawan ng isang lokal na kainan ng pagkaing-dagat. Palitan ng beripikadong detalye.",
+    "lat": 14.28,
+    "lng": 120.71,
+    "sample": true
+  }
+]

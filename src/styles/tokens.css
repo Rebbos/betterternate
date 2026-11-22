@@ -1,12 +1,134 @@
-/* Minimal stub. Full token set + dark mode in Phase 2. */
+/*
+ * Design tokens: the ONLY place visual values live.
+ * Change a value here and the whole site follows. Phase 7 restyles by editing this file.
+ * Raw values are --bt-*; @theme below maps them to Tailwind utilities
+ * (bg-surface, text-muted, rounded-md, shadow-sm, font-heading, min-h-tap ...).
+ */
+
 :root {
+  color-scheme: light;
+
+  /* Color: neutral grayscale + one accent */
   --bt-bg: #ffffff;
-  --bt-text: #111111;
-  --bt-muted: #555555;
+  --bt-surface: #f4f4f5;
+  --bt-text: #18181b;
+  --bt-muted: #52525b; /* 7.7:1 on bg, also used for form-field borders (>= 3:1) */
+  --bt-border: #d4d4d8; /* decorative dividers only */
+  --bt-primary: #1d4ed8;
+  --bt-primary-contrast: #ffffff;
+  --bt-success: #15803d;
+  --bt-warning: #a16207;
+  --bt-danger: #b91c1c;
+  --bt-info: #0369a1;
+
+  /* Type */
+  --bt-font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+  --bt-font-heading: var(--bt-font-sans);
+  --bt-text-xs: 0.75rem;
+  --bt-text-sm: 0.875rem;
+  --bt-text-base: 1rem;
+  --bt-text-lg: 1.125rem;
+  --bt-text-xl: 1.25rem;
+  --bt-text-2xl: 1.5rem;
+  --bt-text-3xl: 1.875rem;
+
+  /* Shape & depth */
+  --bt-radius-sm: 0.25rem;
+  --bt-radius-md: 0.5rem;
+  --bt-radius-lg: 0.75rem;
+  --bt-radius-full: 9999px;
+  --bt-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --bt-shadow-md: 0 4px 12px rgb(0 0 0 / 0.1);
+
+  /* Rhythm */
+  --bt-space: 0.25rem; /* Tailwind spacing unit: p-4 = 4 x this */
+  --bt-tap: 2.75rem; /* 44px minimum tap target */
+}
+
+/* Dark values, written twice: explicit choice + system preference when no choice saved. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bt-bg: #0f0f11;
+  --bt-surface: #1c1c20;
+  --bt-text: #f4f4f5;
+  --bt-muted: #a1a1aa;
+  --bt-border: #3f3f46;
+  --bt-primary: #8ab4f8;
+  --bt-primary-contrast: #0f0f11;
+  --bt-success: #4ade80;
+  --bt-warning: #facc15;
+  --bt-danger: #f87171;
+  --bt-info: #38bdf8;
+  --bt-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --bt-shadow-md: 0 4px 12px rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bt-bg: #0f0f11;
+    --bt-surface: #1c1c20;
+    --bt-text: #f4f4f5;
+    --bt-muted: #a1a1aa;
+    --bt-border: #3f3f46;
+    --bt-primary: #8ab4f8;
+    --bt-primary-contrast: #0f0f11;
+    --bt-success: #4ade80;
+    --bt-warning: #facc15;
+    --bt-danger: #f87171;
+    --bt-info: #38bdf8;
+    --bt-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+    --bt-shadow-md: 0 4px 12px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* Drop Tailwind's built-in palette/radii/shadows/fonts so only tokens can be used. */
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --font-*: initial;
 }
 
 @theme inline {
   --color-bg: var(--bt-bg);
+  --color-surface: var(--bt-surface);
   --color-text: var(--bt-text);
   --color-muted: var(--bt-muted);
+  --color-border: var(--bt-border);
+  --color-primary: var(--bt-primary);
+  --color-primary-contrast: var(--bt-primary-contrast);
+  --color-success: var(--bt-success);
+  --color-warning: var(--bt-warning);
+  --color-danger: var(--bt-danger);
+  --color-info: var(--bt-info);
+
+  --font-sans: var(--bt-font-sans);
+  --font-heading: var(--bt-font-heading);
+
+  --text-xs: var(--bt-text-xs);
+  --text-sm: var(--bt-text-sm);
+  --text-base: var(--bt-text-base);
+  --text-lg: var(--bt-text-lg);
+  --text-xl: var(--bt-text-xl);
+  --text-2xl: var(--bt-text-2xl);
+  --text-3xl: var(--bt-text-3xl);
+
+  --radius-sm: var(--bt-radius-sm);
+  --radius-md: var(--bt-radius-md);
+  --radius-lg: var(--bt-radius-lg);
+  --radius-full: var(--bt-radius-full);
+  --shadow-sm: var(--bt-shadow-sm);
+  --shadow-md: var(--bt-shadow-md);
+
+  --spacing: var(--bt-space);
+  --spacing-tap: var(--bt-tap);
+
+  --animate-slide-in: bt-slide-in 200ms ease-out;
+}
+
+@keyframes bt-slide-in {
+  from {
+    transform: translateX(100%);
+  }
 }

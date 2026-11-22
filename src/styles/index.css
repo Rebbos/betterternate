@@ -1,2 +1,24 @@
 @import 'tailwindcss';
 @import './tokens.css';
+
+@layer base {
+  body {
+    @apply bg-bg font-sans text-base text-text antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Lock page scroll while the mobile drawer (modal <dialog>) is open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}

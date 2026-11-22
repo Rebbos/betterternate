@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next'
+import { Container, Section } from '@/components/ui/Container'
 
 export default function Home() {
   const { t } = useTranslation()
   return (
-    <main className="min-h-dvh bg-bg p-4 text-text">
-      <h1 className="text-2xl font-bold">{t('home.title')}</h1>
-      <p className="text-muted">{t('home.placeholder')}</p>
-    </main>
+    <Container>
+      <Section>
+        <h1 className="mb-2 text-2xl font-bold md:text-3xl">{t('home.title')}</h1>
+        <p className="text-muted">{t('home.placeholder')}</p>
+      </Section>
+    </Container>
   )
 }

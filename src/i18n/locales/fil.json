@@ -1,6 +1,100 @@
 {
+  "site": {
+    "name": "Better Ternate",
+    "tagline": "Hindi opisyal na gabay sa mga serbisyo at impormasyon sa Ternate, Cavite, na pinapatakbo ng mga boluntaryo."
+  },
+  "skipLink": "Lumaktaw sa pangunahing nilalaman",
+  "sample": {
+    "badge": "Sample data",
+    "hint": "Pansamantalang impormasyon, hindi pa beripikado"
+  },
+  "disclaimer": {
+    "label": "Paalala ng site",
+    "text": "Hindi opisyal na community site, walang kaugnayan sa Munisipyo ng Ternate.",
+    "link": "Hanapin ang mga opisyal na channel"
+  },
+  "nav": {
+    "label": "Pangunahin",
+    "services": "Serbisyo",
+    "hotlines": "Hotline",
+    "government": "Pamahalaan",
+    "barangays": "Barangay",
+    "tourism": "Turismo",
+    "news": "Balita",
+    "transparency": "Transparency",
+    "about": "Tungkol",
+    "contact": "Makipag-ugnayan"
+  },
+  "header": {
+    "search": "Maghanap",
+    "switchLanguage": "Switch to English",
+    "languageShort": "EN",
+    "themeToDark": "Lumipat sa dark mode",
+    "themeToLight": "Lumipat sa light mode",
+    "openMenu": "Buksan ang menu",
+    "closeMenu": "Isara ang menu",
+    "menu": "Menu"
+  },
+  "bottomBar": {
+    "label": "Mabilisang link"
+  },
+  "footer": {
+    "linksHeading": "Mga pahina",
+    "dataHeading": "Pinagmulan ng datos",
+    "dataText": "Tinipon ng mga boluntaryo mula sa mga pampublikong mapagkukunan. Ang mga talang may “Sample data” ay pansamantala lamang.",
+    "licenseHeading": "Lisensya",
+    "licenseText": "Code: MIT · Nilalaman: CC BY 4.0",
+    "source": "Source code sa GitHub",
+    "report": "I-report ang lumang impormasyon"
+  },
   "home": {
     "title": "Better Ternate",
     "placeholder": "Hindi opisyal na community portal para sa Ternate, Cavite. Malapit na."
+  },
+  "pages": {
+    "services": "Mga Serbisyo",
+    "serviceDetail": "Serbisyo",
+    "hotlines": "Mga Hotline",
+    "government": "Pamahalaan",
+    "barangays": "Mga Barangay",
+    "barangayDetail": "Barangay",
+    "transparency": "Transparency",
+    "tourism": "Turismo",
+    "news": "Balita",
+    "newsDetail": "Balita",
+    "contact": "Makipag-ugnayan",
+    "about": "Tungkol sa Amin",
+    "comingSoon": "Ginagawa pa ang pahinang ito."
+  },
+  "notFound": {
+    "title": "Hindi nahanap ang pahina",
+    "text": "Hindi namin mahanap ang pahinang iyon. Maaaring nailipat na ito.",
+    "home": "Pumunta sa home page"
+  },
+  "devui": {
+    "title": "Mga UI primitive",
+    "buttons": "Mga button",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "ghost": "Ghost",
+    "disabled": "Disabled",
+    "badges": "Mga badge",
+    "cards": "Mga card",
+    "cardTitle": "Pamagat ng card",
+    "cardText": "Pinagsasama ng card ang magkakaugnay na nilalaman.",
+    "alerts": "Mga alert",
+    "alertTitle": "Paalala",
+    "alertText": "Halimbawang mensahe ng alert.",
+    "forms": "Mga form control",
+    "inputLabel": "Buong pangalan",
+    "inputHint": "Ayon sa iyong ID.",
+    "errorLabel": "Email",
+    "errorText": "Maglagay ng wastong email address.",
+    "textareaLabel": "Mensahe",
+    "selectLabel": "Kategorya",
+    "optionA": "Opsyon A",
+    "optionB": "Opsyon B",
+    "skeleton": "Skeleton",
+    "content": "Nilalaman (mula sa /content)"
   }
 }

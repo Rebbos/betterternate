@@ -1,6 +1,100 @@
 {
+  "site": {
+    "name": "Better Ternate",
+    "tagline": "Unofficial, volunteer-run guide to services and information in Ternate, Cavite."
+  },
+  "skipLink": "Skip to main content",
+  "sample": {
+    "badge": "Sample data",
+    "hint": "Placeholder information, not yet verified"
+  },
+  "disclaimer": {
+    "label": "Site notice",
+    "text": "Unofficial community site, not affiliated with the Municipality of Ternate.",
+    "link": "Find official channels"
+  },
+  "nav": {
+    "label": "Main",
+    "services": "Services",
+    "hotlines": "Hotlines",
+    "government": "Government",
+    "barangays": "Barangays",
+    "tourism": "Tourism",
+    "news": "News",
+    "transparency": "Transparency",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "header": {
+    "search": "Search",
+    "switchLanguage": "Lumipat sa Filipino",
+    "languageShort": "FIL",
+    "themeToDark": "Switch to dark mode",
+    "themeToLight": "Switch to light mode",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menu": "Menu"
+  },
+  "bottomBar": {
+    "label": "Quick links"
+  },
+  "footer": {
+    "linksHeading": "Pages",
+    "dataHeading": "Data sources",
+    "dataText": "Compiled by volunteers from public sources. Records marked “Sample data” are placeholders.",
+    "licenseHeading": "License",
+    "licenseText": "Code: MIT · Content: CC BY 4.0",
+    "source": "Source code on GitHub",
+    "report": "Report outdated info"
+  },
   "home": {
     "title": "Better Ternate",
     "placeholder": "Unofficial community portal for Ternate, Cavite. Coming soon."
+  },
+  "pages": {
+    "services": "Services",
+    "serviceDetail": "Service",
+    "hotlines": "Hotlines",
+    "government": "Government",
+    "barangays": "Barangays",
+    "barangayDetail": "Barangay",
+    "transparency": "Transparency",
+    "tourism": "Tourism",
+    "news": "News",
+    "newsDetail": "News",
+    "contact": "Contact",
+    "about": "About",
+    "comingSoon": "This page is being built."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "We couldn’t find that page. It may have moved.",
+    "home": "Go to the home page"
+  },
+  "devui": {
+    "title": "UI primitives",
+    "buttons": "Buttons",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "ghost": "Ghost",
+    "disabled": "Disabled",
+    "badges": "Badges",
+    "cards": "Cards",
+    "cardTitle": "Card title",
+    "cardText": "Cards group related content.",
+    "alerts": "Alerts",
+    "alertTitle": "Heads up",
+    "alertText": "This is a sample alert message.",
+    "forms": "Form controls",
+    "inputLabel": "Full name",
+    "inputHint": "As shown on your ID.",
+    "errorLabel": "Email",
+    "errorText": "Enter a valid email address.",
+    "textareaLabel": "Message",
+    "selectLabel": "Category",
+    "optionA": "Option A",
+    "optionB": "Option B",
+    "skeleton": "Skeleton",
+    "content": "Content (from /content)"
   }
 }

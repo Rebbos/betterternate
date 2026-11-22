@@ -10,6 +10,13 @@
       content="Unofficial community information portal for Ternate, Cavite."
     />
     <title>Better Ternate</title>
+    <!-- Apply saved theme before first paint (no flash). Key shared with src/hooks/useTheme.ts. -->
+    <script>
+      try {
+        var t = localStorage.getItem('bt-theme')
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

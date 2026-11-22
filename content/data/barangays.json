@@ -1,1 +1,102 @@
-[]
+[
+  {
+    "slug": "bucana",
+    "name": "Bucana",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121003",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "poblacion-i",
+    "name": "Poblacion I",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121001",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "poblacion-i-a",
+    "name": "Poblacion I A",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121009",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "poblacion-ii",
+    "name": "Poblacion II",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121002",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "poblacion-iii",
+    "name": "Poblacion III",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121005",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "san-jose",
+    "name": "San Jose",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121006",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "san-juan-i",
+    "name": "San Juan I",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121007",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "san-juan-ii",
+    "name": "San Juan II",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121010",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "sapang-i",
+    "name": "Sapang I",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121008",
+    "verified": false,
+    "sample": true
+  },
+  {
+    "slug": "sapang-ii",
+    "name": "Sapang II",
+    "captain": "John Doe",
+    "hall_address": "123 Sample St., Ternate, Cavite",
+    "hotline": "0900-000-0000",
+    "psgc_code": "0402121011",
+    "verified": false,
+    "sample": true
+  }
+]

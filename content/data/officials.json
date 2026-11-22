@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "name": "John Doe",
+    "position": "Municipal Mayor",
+    "term_start": "2025-06-30",
+    "term_end": "2028-06-30",
+    "office": "municipal-mayors-office",
+    "contact": { "phone": "0900-000-0000", "email": "johndoe@example.com" },
+    "sample": true
+  },
+  {
+    "name": "Jane Doe",
+    "position": "Municipal Vice Mayor",
+    "term_start": "2025-06-30",
+    "term_end": "2028-06-30",
+    "office": "sangguniang-bayan",
+    "contact": { "phone": "0900-000-0000", "email": "johndoe@example.com" },
+    "sample": true
+  },
+  {
+    "name": "John Doe 2",
+    "position": "Sangguniang Bayan Member",
+    "term_start": "2025-06-30",
+    "term_end": "2028-06-30",
+    "office": "sangguniang-bayan",
+    "sample": true
+  },
+  {
+    "name": "Jane Doe 2",
+    "position": "Sangguniang Bayan Member",
+    "term_start": "2025-06-30",
+    "term_end": "2028-06-30",
+    "office": "sangguniang-bayan",
+    "sample": true
+  }
+]
