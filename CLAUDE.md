@@ -20,8 +20,10 @@ website of the Municipality of Ternate and links to official channels.
   Better Ternate has its own visual identity (inspired by BetterGov.ph, not styled like it)
 - react-i18next (English + Filipino), lucide-react icons, fuse.js search, zod schemas
 - Content as JSON + Markdown in /content (edited by volunteers via PR)
-- Vercel (hosting, Git integration deploys) + Vercel Functions (/api) + Postgres via
-  Neon from the Vercel Marketplace (form storage). Security headers in vercel.json.
+- Netlify (primary hosting, Git integration deploys); Vercel kept working as a second host.
+  Form API handlers live in /api (Vercel Functions); netlify/functions/api.ts serves them
+  on Netlify. Postgres via Neon (form storage; DATABASE_URL or NETLIFY_DATABASE_URL).
+  Security headers in vercel.json AND netlify.toml: keep them in sync.
 - Cloudflare Turnstile on all public forms, verified server-side
 - Vitest + React Testing Library, Playwright (+ @axe-core/playwright)
 - ESLint, Prettier, Husky + lint-staged, GitHub Actions

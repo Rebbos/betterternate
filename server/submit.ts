@@ -1,5 +1,6 @@
 /**
- * Shared handler for the public form endpoints (api/contact.ts, api/feedback.ts).
+ * Shared handler for the public form endpoints (api/contact.ts, api/feedback.ts), used on
+ * Vercel directly and on Netlify via netlify/functions/api.ts.
  * Lives outside /api so Vercel doesn't turn it into a route.
  */
 import type { z } from 'zod'
@@ -53,7 +54,7 @@ export function handleSubmission<S extends z.ZodType>(
       const secret = process.env.TURNSTILE_SECRET_KEY
       if (!secret) return fail(500, 'misconfigured')
 
-      // Vercel sets x-real-ip to the visitor's IP.
+      // Visitor IP: Vercel sets x-real-ip; netlify/functions/api.ts copies Netlify's in.
       const ip = request.headers.get('x-real-ip')
       if (!(await verifyTurnstile(token, secret, ip))) return fail(403, 'verification_failed')
 

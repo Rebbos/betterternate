@@ -17,5 +17,14 @@
     "noFallthroughCasesInSwitch": true,
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "api", "server", "tests", "scripts", "vite.config.ts", "playwright.config.ts"]
+  "include": [
+    "src",
+    "api",
+    "netlify",
+    "server",
+    "tests",
+    "scripts",
+    "vite.config.ts",
+    "playwright.config.ts"
+  ]
 }

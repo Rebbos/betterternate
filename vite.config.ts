@@ -28,6 +28,8 @@ function devApi(): Plugin {
     configureServer(server) {
       // Server-only secrets (TURNSTILE_SECRET_KEY, DATABASE_URL) from .env / .env.local.
       Object.assign(process.env, loadEnv('development', process.cwd(), ''))
+      // Lets server/db.ts log submissions instead of failing when there's no database.
+      process.env.BT_LOCAL_API = '1'
       server.middlewares.use('/api', async (req, res, next) => {
         const name = req.url?.split('?')[0].replace(/^\//, '') ?? ''
         if (!/^[a-z-]+$/.test(name)) return next()

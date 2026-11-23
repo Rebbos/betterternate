@@ -22,8 +22,8 @@ identity.
 | Content  | Markdown + JSON in `/content`, validated with zod at build time            |
 | Search   | fuse.js over a prebuilt index; works offline                               |
 | Offline  | Service worker (vite-plugin-pwa) precaches the app, content and search     |
-| Hosting  | Vercel (static site + Vercel Functions in `/api`)                          |
-| Forms    | Cloudflare Turnstile (verified server-side) → Postgres (Neon via Vercel)   |
+| Hosting  | Netlify (primary) or Vercel: same build, same `/api` handlers              |
+| Forms    | Cloudflare Turnstile (verified server-side) → Postgres (Neon)              |
 | Tests    | Vitest + Testing Library, Playwright + axe, Lighthouse CI                  |
 
 ## Local setup
@@ -42,11 +42,12 @@ work on the site.
 
 ### Environment variables
 
-| Name                      | Where       | Purpose                                           |
-| ------------------------- | ----------- | ------------------------------------------------- |
-| `VITE_TURNSTILE_SITE_KEY` | browser     | Turnstile site key (public)                       |
-| `TURNSTILE_SECRET_KEY`    | server only | Turnstile secret, used by `/api` to verify tokens |
-| `DATABASE_URL`            | server only | Postgres connection string; optional locally      |
+| Name                      | Where       | Purpose                                            |
+| ------------------------- | ----------- | -------------------------------------------------- |
+| `VITE_TURNSTILE_SITE_KEY` | browser     | Turnstile site key (public)                        |
+| `TURNSTILE_SECRET_KEY`    | server only | Turnstile secret, used by `/api` to verify tokens  |
+| `DATABASE_URL`            | server only | Postgres connection string; optional locally       |
+| `NETLIFY_DATABASE_URL`    | server only | Set by Netlify DB; used if `DATABASE_URL` is empty |
 
 `.env.example` ships Cloudflare's published **always-pass test keys**
 (`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA`): the widget passes
@@ -68,6 +69,27 @@ bot protection off.
 | `npm run test:e2e`         | Browser tests at 4 viewports + axe accessibility (Playwright)     |
 | `npm run lhci`             | Lighthouse CI with mobile budgets (needs Chrome or `CHROME_PATH`) |
 | `npm run db:migrate`       | Apply `migrations/*.sql` to `DATABASE_URL`                        |
+
+## Deploying to Netlify (one-time setup)
+
+The site runs on Netlify or Vercel from the same code. On Netlify, `netlify.toml` holds the
+build settings, security headers and SPA fallback, and `netlify/functions/api.ts` serves
+`/api/*` by calling the same handlers in `/api` that Vercel uses.
+
+1. **Import the repo:** in Netlify, choose _Add new project → Import an existing project_
+   and pick this GitHub repo. Build settings come from `netlify.toml`.
+2. **Add a database** (either way works):
+   - _Extensions → Neon_ (Netlify DB). This sets `NETLIFY_DATABASE_URL`.
+   - Or create a free project at neon.tech, region **Singapore (`aws-ap-southeast-1`)**,
+     and add its connection string as `DATABASE_URL`.
+3. **Create the table:** put the connection string in `.env.local` as `DATABASE_URL`, then
+   run `npm run db:migrate`.
+4. **Environment variables:** in _Site configuration → Environment variables_, add
+   `VITE_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` (mark it secret) and, if you skipped
+   Netlify DB, `DATABASE_URL` (secret). Add your Netlify domain(s) to the Turnstile widget.
+5. **Redeploy** so the build picks up the variables.
+
+The checks under _Check after deploying_ below apply to Netlify too.
 
 ## Deploying to Vercel (one-time setup)
 
@@ -104,12 +126,13 @@ runs all the tests on each PR.
 `SELECT * FROM submissions ORDER BY created_at DESC;`
 
 Security headers (CSP, nosniff, frame and permissions policies) and the SPA fallback are in
-`vercel.json`.
+`vercel.json` and, for Netlify, `netlify.toml`. Keep the two in sync.
 
 ## Project structure
 
 ```
-api/                 Vercel Functions: contact.ts, feedback.ts, health.ts
+api/                 Form API handlers (Vercel Functions): contact.ts, feedback.ts, health.ts
+netlify/functions/    api.ts: serves /api/* on Netlify using the handlers above
 server/              Shared server code: submit handler (Turnstile + zod), db.ts
 content/             Volunteer-editable data
   data/*.json          hotlines, offices, officials, barangays, tourism, documents
