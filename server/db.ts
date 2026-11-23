@@ -10,16 +10,17 @@ export type Row = {
 }
 
 /**
- * Stores one form submission in Postgres (Neon, connected via the Vercel Marketplace,
- * which sets DATABASE_URL). Local dev without a database logs the row instead.
+ * Stores one form submission in Postgres (Neon). The Vercel Marketplace integration sets
+ * DATABASE_URL; Netlify DB (also Neon) sets NETLIFY_DATABASE_URL. Either works.
+ * Only local dev (`npm run dev` sets BT_LOCAL_API; `netlify dev` sets NETLIFY_DEV) may run
+ * without a database: it logs the row instead. Deployed, it fails loudly rather than tell
+ * the visitor "sent" and drop the message.
  */
 export async function insertSubmission(r: Row) {
-  // Netlify's Neon integration (Netlify DB) sets NETLIFY_DATABASE_URL instead.
   const url = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL
   if (!url) {
-    // Deployed: fail loudly rather than tell the visitor "sent" and drop the message.
-    const deployed = process.env.VERCEL || process.env.NETLIFY || process.env.SITE_ID
-    if (deployed && !process.env.NETLIFY_DEV) throw new Error('DATABASE_URL is not set')
+    if (!process.env.BT_LOCAL_API && !process.env.NETLIFY_DEV)
+      throw new Error('DATABASE_URL is not set')
     console.info('[dev] DATABASE_URL not set, submission NOT stored:', r)
     return
   }

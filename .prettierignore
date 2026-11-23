@@ -1,5 +1,6 @@
 dist
 .vercel
+.netlify
 .lighthouseci
 package-lock.json
 playwright-report

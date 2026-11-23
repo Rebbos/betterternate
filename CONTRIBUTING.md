@@ -79,8 +79,8 @@ Branch from `main` and name branches by type:
 | `design/`  | visual or design-token changes |
 | `docs/`    | documentation                  |
 
-Example: `content/update-cedula-fees`. Keep PRs small and focused. Every PR gets a Vercel
-preview link and runs CI (content check, lint, typecheck, unit tests, build, browser and
+Example: `content/update-cedula-fees`. Keep PRs small and focused. Every PR gets a Netlify
+deploy preview link and runs CI (content check, lint, typecheck, unit tests, build, browser and
 accessibility tests, Lighthouse).
 
 ### Before you push

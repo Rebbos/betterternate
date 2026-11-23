@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { expect, test } from 'vitest'
 import { routes } from '@/router'
@@ -33,7 +33,8 @@ test.each([
 ])('%s renders "%s" and sets the page title', async (path, h1) => {
   renderAt(path)
   expect(await screen.findByRole('heading', { level: 1, name: h1 })).toBeInTheDocument()
-  expect(document.title).toBe(`${h1} · Better Ternate`)
+  // The title is set in an effect; wait for it rather than racing the render.
+  await waitFor(() => expect(document.title).toBe(`${h1} · Better Ternate`))
 })
 
 test('service detail shows sample fee, office, last verified, report link', async () => {
