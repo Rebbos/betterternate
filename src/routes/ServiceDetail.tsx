@@ -9,13 +9,33 @@ import { SampleBadge } from '@/components/ui/SampleBadge'
 import { getOffice, getService } from '@/lib/content'
 import { formatDate, formatPeso, pick, telHref } from '@/lib/format'
 import NotFound from './NotFound'
+import { useStructuredData } from '@/hooks/useStructuredData'
+import { PRODUCTION_URL } from '@/lib/site'
 
 export default function ServiceDetail() {
   const { t, i18n } = useTranslation()
   const service = getService(useParams().slug ?? '')
+  const lang = i18n.language
+  useStructuredData(
+    'service-detail',
+    service
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: pick(lang, service.title_en, service.title_fil),
+          description:
+            service.steps[0] ?? 'Information about a government service in Ternate, Cavite.',
+          url: `${PRODUCTION_URL}/services/${service.slug}`,
+          areaServed: {
+            '@type': 'AdministrativeArea',
+            name: 'Ternate, Cavite',
+          },
+        }
+      : null,
+  )
+
   if (!service) return <NotFound />
 
-  const lang = i18n.language
   const office = getOffice(service.office)
   const sampleSuffix = service.sample ? ` ${t('sample.suffix')}` : ''
 

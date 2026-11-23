@@ -56,6 +56,24 @@ test.each([
   })
 })
 
+test('government and service detail expose route JSON-LD', async () => {
+  renderAt('/government')
+  await screen.findByRole('heading', { level: 1, name: 'Government' })
+  const governmentSchema = document.head.querySelector('script[data-schema="government"]')
+  expect(governmentSchema).toBeInTheDocument()
+  expect(JSON.parse(governmentSchema?.textContent ?? '{}')['@type']).toBe('GovernmentOrganization')
+})
+
+test('service detail exposes service and breadcrumb JSON-LD', async () => {
+  renderAt('/services/barangay-clearance')
+  await screen.findByRole('heading', { level: 1, name: 'Get a barangay clearance' })
+  const serviceSchema = document.head.querySelector('script[data-schema="service-detail"]')
+  expect(serviceSchema).toBeInTheDocument()
+  expect(JSON.parse(serviceSchema?.textContent ?? '{}')['@type']).toBe('Service')
+  const breadcrumbSchema = document.head.querySelector('script[data-schema="breadcrumb"]')
+  expect(JSON.parse(breadcrumbSchema?.textContent ?? '{}')['@type']).toBe('BreadcrumbList')
+})
+
 test('service detail shows sample fee, office, last verified, report link', async () => {
   renderAt('/services/barangay-clearance')
   await screen.findByRole('heading', { level: 1 })

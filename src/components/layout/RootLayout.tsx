@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Outlet, ScrollRestoration } from 'react-router'
+import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { WifiOff } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { useOnline } from '@/hooks/useOnline'
@@ -16,9 +16,12 @@ const SearchDialog = lazy(() => import('@/components/search/SearchDialog'))
 
 export default function RootLayout() {
   const { t } = useTranslation()
+  const location = useLocation()
   const online = useOnline()
   // null = closed; a string = open with that initial query.
-  const [search, setSearch] = useState<string | null>(null)
+  const [search, setSearch] = useState<string | null>(() =>
+    new URLSearchParams(location.search).get('q'),
+  )
   const openSearch = useCallback((query = '') => setSearch(query), [])
 
   useEffect(() => {

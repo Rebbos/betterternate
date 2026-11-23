@@ -71,7 +71,11 @@ function descriptionWithinLimit(description: string) {
 /**
  * Per-page <title>, description and Open Graph tags (updates the defaults in index.html).
  */
-export function usePageMeta(title?: string, description?: string) {
+export function usePageMeta(
+  title?: string,
+  description?: string,
+  breadcrumbs?: Array<{ name: string; item: string }>,
+) {
   const { t, i18n } = useTranslation()
   const routeLocation = useLocation()
   const site = t('site.name')
@@ -115,5 +119,29 @@ export function usePageMeta(title?: string, description?: string) {
       'Better Ternate community portal - Unofficial community site',
     )
     setLinkRel('canonical', canonicalUrl)
-  }, [fullTitle, desc, lang, route, routeLocation.pathname, site])
+
+    if (breadcrumbs) {
+      let breadcrumbScript = document.head.querySelector<HTMLScriptElement>(
+        'script[data-schema="breadcrumb"]',
+      )
+      if (!breadcrumbScript) {
+        breadcrumbScript = document.createElement('script')
+        breadcrumbScript.type = 'application/ld+json'
+        breadcrumbScript.dataset.schema = 'breadcrumb'
+        document.head.append(breadcrumbScript)
+      }
+      breadcrumbScript.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((entry, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: entry.name,
+          item: entry.item,
+        })),
+      })
+    } else {
+      document.head.querySelector('script[data-schema="breadcrumb"]')?.remove()
+    }
+  }, [fullTitle, desc, lang, route, routeLocation.pathname, site, breadcrumbs])
 }

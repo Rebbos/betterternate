@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { ChevronRight } from 'lucide-react'
 import { usePageMeta } from '@/hooks/usePageMeta'
+import { PRODUCTION_URL } from '@/lib/site'
 
 export type Crumb = { to: string; label: string }
 
@@ -19,7 +20,17 @@ export default function PageHeader({
   children?: ReactNode
 }) {
   const { t } = useTranslation()
-  usePageMeta(title, description)
+  const breadcrumbItems = crumbs
+    ? [
+        { name: t('breadcrumb.home'), item: `${PRODUCTION_URL}/` },
+        ...crumbs.map((crumb) => ({
+          name: crumb.label,
+          item: `${PRODUCTION_URL}${crumb.to}`,
+        })),
+        { name: title, item: `${PRODUCTION_URL}${window.location.pathname}` },
+      ]
+    : undefined
+  usePageMeta(title, description, breadcrumbItems)
 
   return (
     <div className="pt-6 md:pt-10">
