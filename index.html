@@ -58,13 +58,8 @@
     <title>Better Ternate</title>
     <!-- Blocking on purpose: sets the saved theme before first paint. -->
     <script src="/theme-init.js"></script>
-    <!-- Cloudflare Web Analytics -->
-    <script
-      type="module"
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "337ba07a2c53416da72bb0999536d3b2"}'
-    ></script>
-    <!-- End Cloudflare Web Analytics -->
+    <!-- Cloudflare Web Analytics is loaded only on the production hostname. -->
+    <script src="/cloudflare-analytics.js"></script>
   </head>
   <body>
     <div id="root"></div>
