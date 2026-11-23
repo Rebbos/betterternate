@@ -1,4 +1,4 @@
-// Vercel Function: POST /api/contact
+// API handler (served by netlify/functions/api.ts): POST /api/contact
 import { handleSubmission } from '../server/submit.js'
 import { contactSchema } from '../src/lib/forms.js'
 

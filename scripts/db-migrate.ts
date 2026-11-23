@@ -11,7 +11,7 @@ try {
 } catch {
   /* no .env.local: rely on the environment */
 }
-const url = process.env.DATABASE_URL
+const url = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL
 if (!url) {
   console.error('DATABASE_URL is not set (add it to .env.local or the environment).')
   process.exit(1)
