@@ -6,6 +6,8 @@ import { Container, Section } from '@/components/ui/Container'
 import { SampleBadge } from '@/components/ui/SampleBadge'
 import { getOffice, getOffices, getOfficials } from '@/lib/content'
 import { formatDate, telHref } from '@/lib/format'
+import { useStructuredData } from '@/hooks/useStructuredData'
+import { PRODUCTION_URL } from '@/lib/site'
 
 const row = 'flex items-start gap-2'
 const icon = 'mt-0.5 size-4 shrink-0 text-muted'
@@ -13,6 +15,22 @@ const icon = 'mt-0.5 size-4 shrink-0 text-muted'
 export default function Government() {
   const { t, i18n } = useTranslation()
   const lang = i18n.language
+
+  useStructuredData('government', {
+    '@context': 'https://schema.org',
+    '@type': 'GovernmentOrganization',
+    name: 'Municipality of Ternate',
+    url: `${PRODUCTION_URL}/government`,
+    description: 'Municipal government entity in Ternate, Cavite.',
+    disambiguatingDescription:
+      'Unofficial community portal; this record is not the official website of the Municipality of Ternate.',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Ternate',
+      addressRegion: 'Cavite',
+      addressCountry: 'PH',
+    },
+  })
 
   return (
     <Container className="pb-12">

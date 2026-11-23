@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { expect, test } from 'vitest'
 import { routes } from '@/router'
@@ -9,6 +9,18 @@ const renderAt = (path: string) =>
 test('home has hero search, quick actions, latest news', async () => {
   renderAt('/')
   expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Better Ternate')
+  expect(document.querySelector('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    'https://betterternate.netlify.app/share-image.png',
+  )
+  expect(document.querySelector('meta[name="twitter:card"]')).toHaveAttribute(
+    'content',
+    'summary_large_image',
+  )
+  expect(document.querySelector('meta[property="og:title"]')).toHaveAttribute(
+    'content',
+    'Introducing Better Ternate',
+  )
   expect(screen.getByRole('searchbox', { name: 'What do you need?' })).toBeInTheDocument()
   const quick = within(screen.getByRole('region', { name: 'Quick links' }))
   for (const name of ['Services', 'Hotlines', 'Government', 'Tourism', 'Transparency'])
@@ -33,7 +45,33 @@ test.each([
 ])('%s renders "%s" and sets the page title', async (path, h1) => {
   renderAt(path)
   expect(await screen.findByRole('heading', { level: 1, name: h1 })).toBeInTheDocument()
-  expect(document.title).toBe(`${h1} · Better Ternate`)
+  await waitFor(() => {
+    expect(document.title).toBe(`${h1} — Better Ternate`)
+  })
+  await waitFor(() => {
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `https://betterternate.netlify.app${path}`,
+    )
+  })
+})
+
+test('government and service detail expose route JSON-LD', async () => {
+  renderAt('/government')
+  await screen.findByRole('heading', { level: 1, name: 'Government' })
+  const governmentSchema = document.head.querySelector('script[data-schema="government"]')
+  expect(governmentSchema).toBeInTheDocument()
+  expect(JSON.parse(governmentSchema?.textContent ?? '{}')['@type']).toBe('GovernmentOrganization')
+})
+
+test('service detail exposes service and breadcrumb JSON-LD', async () => {
+  renderAt('/services/barangay-clearance')
+  await screen.findByRole('heading', { level: 1, name: 'Get a barangay clearance' })
+  const serviceSchema = document.head.querySelector('script[data-schema="service-detail"]')
+  expect(serviceSchema).toBeInTheDocument()
+  expect(JSON.parse(serviceSchema?.textContent ?? '{}')['@type']).toBe('Service')
+  const breadcrumbSchema = document.head.querySelector('script[data-schema="breadcrumb"]')
+  expect(JSON.parse(breadcrumbSchema?.textContent ?? '{}')['@type']).toBe('BreadcrumbList')
 })
 
 test('service detail shows sample fee, office, last verified, report link', async () => {

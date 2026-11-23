@@ -31,3 +31,7 @@
   for = "/api/*"
   [headers.values]
     Cache-Control = "no-store"
+
+[[edge_functions]]
+  function = "seo_headers"
+  path = "/*"
