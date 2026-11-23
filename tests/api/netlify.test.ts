@@ -29,14 +29,17 @@ test('config.path lists every API route', () => {
   expect([...config.path].sort()).toEqual(['/api/contact', '/api/feedback', '/api/health'])
 })
 
-test('GET /api/health → 200 ok', async () => {
+test('GET /api/health → 200 ok, never cached', async () => {
   const res = await api(new Request(url('/api/health')))
   expect(res.status).toBe(200)
   expect(await res.json()).toEqual({ ok: true })
+  expect(res.headers.get('cache-control')).toBe('no-store')
 })
 
 test('unknown route or prototype key → 405, never a crash', async () => {
-  expect((await api(new Request(url('/api/nope')))).status).toBe(405)
+  const res = await api(new Request(url('/api/nope')))
+  expect(res.status).toBe(405)
+  expect(res.headers.get('cache-control')).toBe('no-store')
   expect((await api(new Request(url('/api/constructor')))).status).toBe(405)
 })
 

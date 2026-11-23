@@ -27,10 +27,8 @@
   [headers.values]
     Cache-Control = "no-cache"
 
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Cache-Control = "no-store"
+# /api responses get Cache-Control: no-store from netlify/functions/api.ts itself
+# ([[headers]] rules don't apply to function responses).
 
 [[edge_functions]]
   function = "seo_headers"

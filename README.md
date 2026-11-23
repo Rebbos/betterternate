@@ -79,21 +79,29 @@ SPA fallback, and `netlify/functions/api.ts` serves `/api/*` using the handlers 
 
 1. **Import the repo:** in Netlify, choose _Add new project → Import an existing project_
    and pick this GitHub repo. Build settings come from `netlify.toml`.
-2. **Add a database** (either way works):
-   - _Extensions → Neon_ (Netlify DB). This sets `NETLIFY_DATABASE_URL`.
-   - Or create a free project at neon.tech, region **Singapore (`aws-ap-southeast-1`)**,
-     and add its connection string as `DATABASE_URL`.
-3. **Create the table:** put the connection string in `.env.local` as `DATABASE_URL`, then
-   run:
+2. **Add a database (Neon Postgres, free):** create an account at neon.tech and a project
+   named `better-ternate` in region **AWS Singapore (`aws-ap-southeast-1`)**. Keep the
+   `main` branch for production and create a `preview` branch from it, so test submissions
+   from deploy previews never mix with real ones. In Netlify, add `DATABASE_URL` (mark it
+   secret) under _Site configuration → Environment variables_, with **different values per
+   deploy context**:
+   - _Production_: the `main` branch's pooled connection string.
+   - _Deploy previews_ and _Branch deploys_: the `preview` branch's connection string.
+
+   (The _Extensions → Neon_ / Netlify DB route also works: it sets `NETLIFY_DATABASE_URL`,
+   which the code accepts too, but you must claim the database into a Neon account.)
+
+3. **Create the tables** on **both** Neon branches: put each connection string in
+   `.env.local` as `DATABASE_URL` in turn, then run:
    ```sh
    npm run db:migrate
    ```
-   Run it again whenever a new file appears in `migrations/`. It only applies new ones.
+   Run it again (on both branches) whenever a new file appears in `migrations/`. It only
+   applies new ones.
 4. **Turnstile:** in the Cloudflare dashboard, go to _Turnstile → Add widget_ and add your
    Netlify domain(s). In _Site configuration → Environment variables_, add:
    - `VITE_TURNSTILE_SITE_KEY`: the site key (needed at **build** time)
    - `TURNSTILE_SECRET_KEY`: the secret key (mark it **secret**)
-   - `DATABASE_URL` (secret), only if you skipped Netlify DB
 5. **Redeploy** so the build picks up the variables.
 
 **Check after deploying:**
@@ -106,8 +114,13 @@ SPA fallback, and `netlify/functions/api.ts` serves `/api/*` using the handlers 
   curl -X POST https://<your-site>.netlify.app/api/contact -H 'Content-Type: application/json' -d '{}'
   ```
 
-**Reading submissions:** use Neon's SQL editor:
-`SELECT * FROM submissions ORDER BY created_at DESC;`
+**Reading submissions:** use Neon's SQL editor. Keep the Neon project's members to the
+maintainers: submissions contain names and emails.
+`SELECT * FROM submissions WHERE status = 'new' ORDER BY created_at DESC;`
+
+**Data retention:** `netlify/functions/purge-old.ts` runs daily on the production deploy and
+deletes submissions older than 180 days (`RETENTION_DAYS` in `server/retention.ts`, stated in
+the privacy notice). Its runs show under _Logs → Functions → purge-old_ in Netlify.
 
 Security headers (CSP, nosniff, frame and permissions policies) and the SPA fallback are in
 `netlify.toml`. `vercel.json` keeps a copy for the paused Vercel setup;
