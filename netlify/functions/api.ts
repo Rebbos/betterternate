@@ -18,4 +18,5 @@ export default (req: Request) => {
     : Response.json({ ok: false, error: 'method_not_allowed' }, { status: 405 })
 }
 
-export const config = { path: Object.keys(routes) }
+// Must be a literal: Netlify reads this statically at deploy time (keep in sync with routes).
+export const config = { path: ['/api/contact', '/api/feedback', '/api/health'] }
