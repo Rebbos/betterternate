@@ -53,8 +53,9 @@ export function handleSubmission<S extends z.ZodType>(
       const secret = process.env.TURNSTILE_SECRET_KEY
       if (!secret) return fail(500, 'misconfigured')
 
-      // Vercel sets x-real-ip to the visitor's IP.
-      const ip = request.headers.get('x-real-ip')
+      // Visitor IP: Vercel sets x-real-ip, Netlify sets x-nf-client-connection-ip.
+      const ip =
+        request.headers.get('x-real-ip') ?? request.headers.get('x-nf-client-connection-ip')
       if (!(await verifyTurnstile(token, secret, ip))) return fail(403, 'verification_failed')
 
       const result = schema.safeParse(fields)
