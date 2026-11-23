@@ -11,7 +11,9 @@ try {
 } catch {
   /* no .env.local: rely on the environment */
 }
-const url = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL
+// Migrations use the direct (non-pooled) connection when available, per Neon guidance.
+const url =
+  process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL
 if (!url) {
   console.error('DATABASE_URL is not set (add it to .env.local or the environment).')
   process.exit(1)

@@ -79,25 +79,26 @@ SPA fallback, and `netlify/functions/api.ts` serves `/api/*` using the handlers 
 
 1. **Import the repo:** in Netlify, choose _Add new project → Import an existing project_
    and pick this GitHub repo. Build settings come from `netlify.toml`.
-2. **Add a database (Netlify DB = Neon Postgres, free):** in Netlify, open
-   _Extensions → Neon_ and add a database to this site. Netlify creates it and sets
-   `NETLIFY_DATABASE_URL` for the site automatically; the code reads it, so there's nothing
-   to add by hand. Then **claim it into a free Neon account** when Netlify prompts you
-   (unclaimed databases are deleted after a short time; see the notice in Netlify). Claiming
-   also gives you Neon's console for reading submissions. If you can choose a region, pick
-   **AWS Singapore (`aws-ap-southeast-1`)**, the closest to the Philippines.
-   - Deploy previews: if Netlify DB offers a separate database branch for deploy previews,
-     turn it on, so test submissions never mix with real ones. Otherwise, previews write to
-     the same database; their `page_url` shows the preview domain.
-   - Not using Netlify DB? A project you create yourself at neon.tech works the same: set
-     its connection string as `DATABASE_URL` (secret) in Netlify instead.
-3. **Create the tables:** copy the connection string (Neon console → _Connect_, after
-   claiming) into `.env.local` as `DATABASE_URL`, then run:
+2. **Database (Neon Postgres, free, Singapore):** the Neon project is described in
+   `neon.ts` (Postgres + Neon Auth, which is enabled but not used by the site yet). With
+   the Neon CLI (`npm i -g neon`), link and pull its variables into `.env.local`:
+   ```sh
+   neon login        # or set NEON_API_KEY
+   neon init         # first time only: links the project, writes neon.ts
+   neon deploy       # applies neon.ts and pulls DATABASE_URL etc. into .env.local
+   ```
+   Then in Netlify, add `DATABASE_URL` (mark it secret) under _Site configuration →
+   Environment variables_, using the **pooled** connection string (Neon console →
+   _Connect_, pooling on; it's also the `DATABASE_URL` line in `.env.local`).
+   - Deploy previews: to keep test submissions out of real data, create a Neon branch
+     (`neon checkout preview --create`) and give `DATABASE_URL` that branch's string for
+     the _Deploy previews_ context.
+3. **Create the tables:** with `.env.local` filled in, run:
    ```sh
    npm run db:migrate
    ```
-   Run it again whenever a new file appears in `migrations/`. It only applies new ones. If
-   previews use a separate branch, run it on that branch too.
+   It uses the direct connection (`DATABASE_URL_UNPOOLED`) when present. Run it again
+   whenever a new file appears in `migrations/`; it only applies new ones.
 4. **Turnstile:** in the Cloudflare dashboard, go to _Turnstile → Add widget_ and add your
    Netlify domain(s). In _Site configuration → Environment variables_, add:
    - `VITE_TURNSTILE_SITE_KEY`: the site key (needed at **build** time)
