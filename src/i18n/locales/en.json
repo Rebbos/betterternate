@@ -175,7 +175,7 @@
     "privacyTitle": "Privacy notice",
     "privacyIntro": "We follow the Data Privacy Act of 2012 (Republic Act No. 10173) and collect as little as possible.",
     "privacyStorage": "Your language and theme choices are saved only in your own browser. We use no tracking cookies or ads.",
-    "privacyForms": "If you send us a message or feedback, we keep only what you submit, use it only to respond or fix the site, and delete it when no longer needed.",
+    "privacyForms": "If you send us a message or feedback, we keep only what you submit, use it only to respond or fix the site, and delete it automatically after 180 days.",
     "privacyThirdParty": "The map loads tiles from OpenStreetMap, which can see your IP address.",
     "privacyRights": "You may ask to access, correct or delete information you sent us through the contact page."
   },

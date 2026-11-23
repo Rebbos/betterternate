@@ -11,12 +11,15 @@ const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
 }
 const toml = readFileSync('netlify.toml', 'utf8')
 
-// Vercel's "/x/(.*)" is Netlify's "/x/*".
+// Vercel's "/x/(.*)" is Netlify's "/x/*". On Netlify, /api headers are set by the function
+// itself (tests/api/netlify.test.ts checks no-store), so compare everything else.
 const vercelRules: Rules = Object.fromEntries(
-  vercel.headers.map((h) => [
-    h.source.replace('/(.*)', '/*'),
-    Object.fromEntries(h.headers.map((x) => [x.key, x.value])),
-  ]),
+  vercel.headers
+    .filter((h) => !h.source.startsWith('/api/'))
+    .map((h) => [
+      h.source.replace('/(.*)', '/*'),
+      Object.fromEntries(h.headers.map((x) => [x.key, x.value])),
+    ]),
 )
 
 /** Reads the [[headers]] blocks of netlify.toml (flat `Key = "value"` lines only). */

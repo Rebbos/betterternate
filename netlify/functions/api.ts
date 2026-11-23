@@ -11,11 +11,16 @@ const routes: Record<string, Partial<Record<string, Handler>>> = {
   '/api/health': { GET: health },
 }
 
-export default (req: Request) => {
+export default async (req: Request) => {
   const handler = routes[new URL(req.url).pathname]?.[req.method]
-  return handler
-    ? handler(req)
+  const res = handler
+    ? await handler(req)
     : Response.json({ ok: false, error: 'method_not_allowed' }, { status: 405 })
+  // API answers must never be cached. netlify.toml [[headers]] rules don't apply to
+  // function responses, so set it here. Copy first: a Response's headers can be immutable.
+  const out = new Response(res.body, res)
+  out.headers.set('Cache-Control', 'no-store')
+  return out
 }
 
 // Must be a literal: Netlify reads this statically at deploy time (keep in sync with routes).
