@@ -126,7 +126,8 @@ runs all the tests on each PR.
 `SELECT * FROM submissions ORDER BY created_at DESC;`
 
 Security headers (CSP, nosniff, frame and permissions policies) and the SPA fallback are in
-`vercel.json` and, for Netlify, `netlify.toml`. Keep the two in sync.
+`vercel.json` and, for Netlify, `netlify.toml`. Keep the two in sync
+(`tests/unit/hosting-config.test.ts` fails if they drift apart).
 
 ## Project structure
 
