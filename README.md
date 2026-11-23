@@ -22,7 +22,7 @@ identity.
 | Content  | Markdown + JSON in `/content`, validated with zod at build time            |
 | Search   | fuse.js over a prebuilt index; works offline                               |
 | Offline  | Service worker (vite-plugin-pwa) precaches the app, content and search     |
-| Hosting  | Netlify (primary) or Vercel: same build, same `/api` handlers              |
+| Hosting  | Netlify (static site + `netlify/functions`); Vercel setup kept but paused  |
 | Forms    | Cloudflare Turnstile (verified server-side) → Postgres (Neon)              |
 | Tests    | Vitest + Testing Library, Playwright + axe, Lighthouse CI                  |
 
@@ -72,9 +72,10 @@ bot protection off.
 
 ## Deploying to Netlify (one-time setup)
 
-The site runs on Netlify or Vercel from the same code. On Netlify, `netlify.toml` holds the
-build settings, security headers and SPA fallback, and `netlify/functions/api.ts` serves
-`/api/*` by calling the same handlers in `/api` that Vercel uses.
+Deploys use **Netlify's Git integration**: every push to `main` deploys to production, and
+every pull request gets its own deploy preview. GitHub Actions (`.github/workflows/ci.yml`)
+runs all the tests on each PR. `netlify.toml` holds the build settings, security headers and
+SPA fallback, and `netlify/functions/api.ts` serves `/api/*` using the handlers in `/api`.
 
 1. **Import the repo:** in Netlify, choose _Add new project → Import an existing project_
    and pick this GitHub repo. Build settings come from `netlify.toml`.
@@ -83,56 +84,55 @@ build settings, security headers and SPA fallback, and `netlify/functions/api.ts
    - Or create a free project at neon.tech, region **Singapore (`aws-ap-southeast-1`)**,
      and add its connection string as `DATABASE_URL`.
 3. **Create the table:** put the connection string in `.env.local` as `DATABASE_URL`, then
-   run `npm run db:migrate`.
-4. **Environment variables:** in _Site configuration → Environment variables_, add
-   `VITE_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` (mark it secret) and, if you skipped
-   Netlify DB, `DATABASE_URL` (secret). Add your Netlify domain(s) to the Turnstile widget.
-5. **Redeploy** so the build picks up the variables.
-
-The checks under _Check after deploying_ below apply to Netlify too.
-
-## Deploying to Vercel (one-time setup)
-
-Deploys use **Vercel's Git integration**: every push to `main` deploys to production, and
-every pull request gets its own preview URL. GitHub Actions (`.github/workflows/ci.yml`)
-runs all the tests on each PR.
-
-1. **Import the repo:** in Vercel, choose _Add New → Project_ and import this GitHub repo.
-   Build settings come from `vercel.json`, so leave them as they are.
-2. **Add a database:** under the project's _Storage_ tab, add **Neon** (Postgres) from the
-   Marketplace and connect it to the project. This sets `DATABASE_URL` for you.
-3. **Create the table:** copy the Neon connection string into your local `.env.local` as
-   `DATABASE_URL`, then run:
+   run:
    ```sh
    npm run db:migrate
    ```
    Run it again whenever a new file appears in `migrations/`. It only applies new ones.
 4. **Turnstile:** in the Cloudflare dashboard, go to _Turnstile → Add widget_ and add your
-   Vercel domain(s). In Vercel → _Settings → Environment Variables_, add:
+   Netlify domain(s). In _Site configuration → Environment variables_, add:
    - `VITE_TURNSTILE_SITE_KEY`: the site key (needed at **build** time)
-   - `TURNSTILE_SECRET_KEY`: the secret key (mark it **Sensitive**)
+   - `TURNSTILE_SECRET_KEY`: the secret key (mark it **secret**)
+   - `DATABASE_URL` (secret), only if you skipped Netlify DB
 5. **Redeploy** so the build picks up the variables.
 
 **Check after deploying:**
 
-- `https://<your-domain>/api/health` returns `{"ok":true}`.
+- `https://<your-site>.netlify.app/api/health` returns `{"ok":true}`.
+- Refreshing a deep link such as `/services/barangay-clearance` loads the page.
 - Sending the contact form once works.
 - This returns **403**:
   ```sh
-  curl -X POST https://<your-domain>/api/contact -H 'Content-Type: application/json' -d '{}'
+  curl -X POST https://<your-site>.netlify.app/api/contact -H 'Content-Type: application/json' -d '{}'
   ```
 
 **Reading submissions:** use Neon's SQL editor:
 `SELECT * FROM submissions ORDER BY created_at DESC;`
 
 Security headers (CSP, nosniff, frame and permissions policies) and the SPA fallback are in
-`vercel.json` and, for Netlify, `netlify.toml`. Keep the two in sync
-(`tests/unit/hosting-config.test.ts` fails if they drift apart).
+`netlify.toml`. `vercel.json` keeps a copy for the paused Vercel setup;
+`tests/unit/hosting-config.test.ts` fails if the two drift apart.
+
+<!--
+## Deploying to Vercel (PAUSED: Netlify is the deployed site for now)
+
+To turn Vercel back on: delete the "git" block in vercel.json, then follow these steps.
+The /api handlers are already Vercel Functions, so no code changes are needed.
+
+1. Import the repo: in Vercel, choose Add New → Project and import this GitHub repo.
+   Build settings come from vercel.json.
+2. Add a database: under the project's Storage tab, add Neon from the Marketplace and
+   connect it. This sets DATABASE_URL. Set Settings → Functions → Region to Singapore (sin1).
+3. Create the table: npm run db:migrate (see the Netlify steps above).
+4. Turnstile: add your Vercel domain(s) to the widget. In Settings → Environment Variables,
+   add VITE_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY (mark it Sensitive).
+5. Redeploy, then run the same checks as above.
+-->
 
 ## Project structure
 
 ```
-api/                 Form API handlers (Vercel Functions): contact.ts, feedback.ts, health.ts
+api/                 Form API handlers: contact.ts, feedback.ts, health.ts
 netlify/functions/    api.ts: serves /api/* on Netlify using the handlers above
 server/              Shared server code: submit handler (Turnstile + zod), db.ts
 content/             Volunteer-editable data

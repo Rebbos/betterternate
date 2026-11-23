@@ -80,7 +80,7 @@ Branch from `main` and name branches by type:
 | `docs/`    | documentation                  |
 
 Example: `content/update-cedula-fees`. Keep PRs small and focused. Every PR gets a Netlify
-(or Vercel) deploy preview link and runs CI (content check, lint, typecheck, unit tests, build, browser and
+deploy preview link and runs CI (content check, lint, typecheck, unit tests, build, browser and
 accessibility tests, Lighthouse).
 
 ### Before you push

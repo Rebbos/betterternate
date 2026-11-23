@@ -18,8 +18,8 @@ function markdown(): Plugin {
 }
 
 /**
- * Runs /api/*.ts (Vercel Functions, Web Request/Response signature) inside `npm run dev`,
- * so the forms work locally without the Vercel CLI or an account.
+ * Runs /api/*.ts (Web Request/Response handlers) inside `npm run dev`,
+ * so the forms work locally without the Netlify CLI or an account.
  */
 function devApi(): Plugin {
   return {
