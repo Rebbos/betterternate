@@ -56,3 +56,9 @@ placeholders (rule 5) when borrowing content.
 7. After each task run: npm run lint && npm run typecheck && npm test. Fix failures.
 8. Stop at the end of each phase and report: what was built, files changed, how to
    check it, and open questions. Do not start the next phase unless asked.
+9. After any change is deployed, check the live site firsthand
+   (https://betterternate.netlify.app) before calling it done. Passing local checks is
+   not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
+   pages, routes, headers and /api endpoints the change touched (curl or a browser) and
+   report what you actually saw. Never solve or bypass Turnstile; ask a human to do the
+   real form submission.

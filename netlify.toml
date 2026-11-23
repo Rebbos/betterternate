@@ -1,4 +1,4 @@
-# Netlify deploy config. Mirrors vercel.json: the site works on either host.
+# Netlify deploy (vercel.json is kept for Vercel; keep headers in sync between the two).
 [build]
   command = "npm run build"
   publish = "dist"
@@ -7,10 +7,7 @@
 [build.environment]
   NODE_VERSION = "22"
 
-[functions]
-  node_bundler = "esbuild"
-
-# SPA fallback. /api/* is served by netlify/functions/api.ts (its config.path wins).
+# SPA fallback: any path that isn't a file or function serves the app shell.
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -29,3 +26,8 @@
   for = "/sw.js"
   [headers.values]
     Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

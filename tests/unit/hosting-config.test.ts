@@ -11,14 +11,12 @@ const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
 }
 const toml = readFileSync('netlify.toml', 'utf8')
 
-// Vercel's /api headers are set by netlify/functions/api.ts on Netlify instead.
+// Vercel's "/x/(.*)" is Netlify's "/x/*".
 const vercelRules: Rules = Object.fromEntries(
-  vercel.headers
-    .filter((h) => !h.source.startsWith('/api/'))
-    .map((h) => [
-      h.source.replace('/(.*)', '/*'),
-      Object.fromEntries(h.headers.map((x) => [x.key, x.value])),
-    ]),
+  vercel.headers.map((h) => [
+    h.source.replace('/(.*)', '/*'),
+    Object.fromEntries(h.headers.map((x) => [x.key, x.value])),
+  ]),
 )
 
 /** Reads the [[headers]] blocks of netlify.toml (flat `Key = "value"` lines only). */
@@ -46,5 +44,6 @@ test('both hosts fall back to index.html for app routes, but not for /api', () =
     destination: '/index.html',
   })
   expect(toml).toMatch(/from = "\/\*"\s+to = "\/index.html"\s+status = 200/)
-  expect(readFileSync('netlify/functions/api.ts', 'utf8')).toMatch(/path: '\/api\/\*'/)
+  // On Netlify, functions with a config.path take priority over the /* fallback.
+  expect(readFileSync('netlify/functions/api.ts', 'utf8')).toMatch(/path: \[\s*'\/api\//)
 })

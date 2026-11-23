@@ -1,11 +1,10 @@
 /**
- * Shared handler for the public form endpoints (api/contact.ts, api/feedback.ts), used on
- * Vercel directly and on Netlify via netlify/functions/api.ts.
+ * Shared handler for the public form endpoints (api/contact.ts, api/feedback.ts).
  * Lives outside /api so Vercel doesn't turn it into a route.
  */
 import type { z } from 'zod'
-import { HONEYPOT, TOKEN_FIELD } from '../src/lib/forms'
-import { insertSubmission, type Row } from './db'
+import { HONEYPOT, TOKEN_FIELD } from '../src/lib/forms.js'
+import { insertSubmission, type Row } from './db.js'
 
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const MAX_BODY_BYTES = 16 * 1024
@@ -54,8 +53,9 @@ export function handleSubmission<S extends z.ZodType>(
       const secret = process.env.TURNSTILE_SECRET_KEY
       if (!secret) return fail(500, 'misconfigured')
 
-      // Visitor IP: Vercel sets x-real-ip; netlify/functions/api.ts copies Netlify's in.
-      const ip = request.headers.get('x-real-ip')
+      // Visitor IP: Vercel sets x-real-ip, Netlify sets x-nf-client-connection-ip.
+      const ip =
+        request.headers.get('x-real-ip') ?? request.headers.get('x-nf-client-connection-ip')
       if (!(await verifyTurnstile(token, secret, ip))) return fail(403, 'verification_failed')
 
       const result = schema.safeParse(fields)

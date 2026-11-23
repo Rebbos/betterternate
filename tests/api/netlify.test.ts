@@ -25,20 +25,19 @@ afterEach(() => {
 
 const url = (path: string) => `https://example.netlify.app${path}`
 
-test('serves every route under /api/*', () => {
-  expect(config.path).toBe('/api/*')
+test('config.path lists every API route', () => {
+  expect([...config.path].sort()).toEqual(['/api/contact', '/api/feedback', '/api/health'])
 })
 
-test('GET /api/health → 200 ok, not cached', async () => {
+test('GET /api/health → 200 ok', async () => {
   const res = await api(new Request(url('/api/health')))
   expect(res.status).toBe(200)
   expect(await res.json()).toEqual({ ok: true })
-  expect(res.headers.get('cache-control')).toBe('no-store')
 })
 
-test('unknown route → 404; prototype keys are not routes', async () => {
-  expect((await api(new Request(url('/api/nope')))).status).toBe(404)
-  expect((await api(new Request(url('/api/constructor')))).status).toBe(404)
+test('unknown route or prototype key → 405, never a crash', async () => {
+  expect((await api(new Request(url('/api/nope')))).status).toBe(405)
+  expect((await api(new Request(url('/api/constructor')))).status).toBe(405)
 })
 
 test('wrong method → 405', async () => {
@@ -49,10 +48,12 @@ test('POST /api/feedback stores the row and passes the visitor IP to Turnstile',
   const res = await api(
     new Request(url('/api/feedback'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-nf-client-connection-ip': '203.0.113.9',
+      },
       body: JSON.stringify({ helpful: true, page_url: '/', 'cf-turnstile-response': 'good' }),
     }),
-    { ip: '203.0.113.9' },
   )
   expect(res.status).toBe(200)
   expect(rows).toHaveLength(1)
