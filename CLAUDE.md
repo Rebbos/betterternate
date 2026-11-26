@@ -58,8 +58,26 @@ placeholders (rule 5) when borrowing content.
 8. Stop at the end of each phase and report: what was built, files changed, how to
    check it, and open questions. Do not start the next phase unless asked.
 9. After any change is deployed, check the live site firsthand
-   (Vercel production URL; Netlify backup: https://betterternate.netlify.app) before calling it done. Passing local checks is
-   not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
+   (https://betterternate.vercel.app; Netlify backup: https://betterternate.netlify.app)
+   before calling it done. Passing local checks is not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
    pages, routes, headers and /api endpoints the change touched (curl or a browser) and
    report what you actually saw. Never solve or bypass Turnstile; ask a human to do the
    real form submission.
+
+## Workflow (humans + agents)
+One task = one GitHub issue = one branch = one PR = one Claude session.
+Issue (from TASKS.md) → session on its own branch from latest main (plan mode if
+non-trivial) → PR with a free Vercel preview → CI + /code-review + CODEOWNER review →
+merge to main (Vercel production deploy) → live check (rule 9) → a human does any real
+Turnstile form submission.
+10. Start every session from the latest main and one issue; keep PRs small. Merge main
+    into your branch before asking for review.
+11. Put human-only steps at the TOP of every PR description: dashboard settings
+    (Vercel, Netlify, Neon, Cloudflare, GitHub), secrets, real form submissions.
+    Secrets go through the platform's settings, never chat or commits.
+12. Shared files (vercel.json, netlify.toml, package.json, CLAUDE.md, locale JSON) change
+    in one PR at a time. Parallel sessions split by CODEOWNERS area (backend/security vs
+    frontend/SEO) and must not edit the same files.
+13. Hosting decisions are human decisions: never switch the primary host, re-enable a
+    host's auto-deploys, or change the canonical/SEO domain unless asked. Netlify is the
+    backup with builds stopped; deploy there only when asked.
