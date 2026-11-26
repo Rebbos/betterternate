@@ -1,5 +1,9 @@
 # Netlify deploy (vercel.json is kept for Vercel; keep headers in sync between the two).
 [build]
+  # NETLIFY DEPLOYMENTS ARE OFF: Vercel is the live host. An ignore command that exits 0
+  # cancels every Netlify build (production, previews, branch deploys), so nothing deploys
+  # and no credits are spent. To turn Netlify back on, delete this line.
+  ignore = "exit 0"
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"

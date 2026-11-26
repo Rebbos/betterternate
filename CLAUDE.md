@@ -21,9 +21,11 @@ website of the Municipality of Ternate and links to official channels.
 - react-i18next (English + Filipino), lucide-react icons, fuse.js search, zod schemas
 - Content as JSON + Markdown in /content (edited by volunteers via PR)
 - Vercel (primary hosting, Git integration deploys) + Vercel Functions (/api) + Vercel
-  Cron (daily /api/purge-old, needs CRON_SECRET). Netlify is the BACKUP host: keep
-  netlify.toml and netlify/ working (netlify/functions/api.ts serves the same /api
-  handlers; purge-old.ts is its cron) but don't delete or deploy there unless asked.
+  Cron (daily /api/purge-old, needs CRON_SECRET). Netlify is the BACKUP host and its
+  DEPLOYMENTS ARE OFF (`ignore = "exit 0"` in netlify.toml cancels every Netlify build).
+  Keep netlify.toml and netlify/ working (netlify/functions/api.ts serves the same /api
+  handlers; purge-old.ts is its cron), but don't remove that line, delete them, or
+  deploy to Netlify unless asked.
   Postgres via Neon (form storage; DATABASE_URL or NETLIFY_DATABASE_URL).
   Security headers in vercel.json AND netlify.toml: keep them in sync.
 - Cloudflare Turnstile on all public forms, verified server-side
@@ -58,8 +60,8 @@ placeholders (rule 5) when borrowing content.
 8. Stop at the end of each phase and report: what was built, files changed, how to
    check it, and open questions. Do not start the next phase unless asked.
 9. After any change is deployed, check the live site firsthand
-   (https://betterternate.vercel.app; Netlify backup: https://betterternate.netlify.app)
-   before calling it done. Passing local checks is not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
+   (https://betterternate.vercel.app) before calling it done. Passing local checks is
+   not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
    pages, routes, headers and /api endpoints the change touched (curl or a browser) and
    report what you actually saw. Never solve or bypass Turnstile; ask a human to do the
    real form submission.
@@ -79,5 +81,5 @@ Turnstile form submission.
     in one PR at a time. Parallel sessions split by CODEOWNERS area (backend/security vs
     frontend/SEO) and must not edit the same files.
 13. Hosting decisions are human decisions: never switch the primary host, re-enable a
-    host's auto-deploys, or change the canonical/SEO domain unless asked. Netlify is the
-    backup with builds stopped; deploy there only when asked.
+    host's auto-deploys (including removing `ignore = "exit 0"` from netlify.toml), or
+    change the canonical/SEO domain unless asked. Netlify deployments are off for now.

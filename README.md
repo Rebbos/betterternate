@@ -22,7 +22,7 @@ identity.
 | Content  | Markdown + JSON in `/content`, validated with zod at build time            |
 | Search   | fuse.js over a prebuilt index; works offline                               |
 | Offline  | Service worker (vite-plugin-pwa) precaches the app, content and search     |
-| Hosting  | Vercel (static site + Functions + Cron); Netlify kept as a backup          |
+| Hosting  | Vercel (static site + Functions + Cron); Netlify backup, deployments off   |
 | Forms    | Cloudflare Turnstile (verified server-side) → Postgres (Neon)              |
 | Tests    | Vitest + Testing Library, Playwright + axe, Lighthouse CI                  |
 
@@ -135,14 +135,19 @@ Security headers (CSP, nosniff, frame and permissions policies) and the SPA fall
 `vercel.json` and, for the Netlify backup, `netlify.toml`;
 `tests/unit/hosting-config.test.ts` fails if the two drift apart.
 
-### Netlify (backup, builds stopped)
+### Netlify (backup, deployments off)
 
-`netlify.toml` and `netlify/` keep the site deployable on Netlify
-(https://betterternate.netlify.app): `netlify/functions/api.ts` serves the same `/api`
-handlers and `netlify/functions/purge-old.ts` is its daily cron. To avoid spending
-Netlify credits (15 per production deploy on the Free plan) and running the purge twice,
-keep **builds stopped** in Netlify (_Build & deploy → Stop builds_). To switch over, set
-the same environment variables there, start builds and trigger a deploy.
+Netlify deployments are **off for now**. In `netlify.toml`, `ignore = "exit 0"` cancels
+every Netlify build (production, previews and branch deploys), so nothing deploys there and
+no Netlify credits are spent (15 per production deploy on the Free plan). The daily purge
+runs only once, on Vercel. https://betterternate.netlify.app keeps serving its last deploy
+until it's removed in the Netlify dashboard.
+
+`netlify.toml` and `netlify/` still keep the site deployable on Netlify:
+`netlify/functions/api.ts` serves the same `/api` handlers and
+`netlify/functions/purge-old.ts` is its daily cron. To switch Netlify back on, delete the
+`ignore` line (and the test in `tests/unit/hosting-config.test.ts` that guards it), set
+the same environment variables in Netlify, then push or trigger a deploy.
 
 ## Project structure
 
