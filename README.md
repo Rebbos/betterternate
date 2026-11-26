@@ -83,32 +83,31 @@ own preview URL. GitHub Actions (`.github/workflows/ci.yml`) runs all the tests 
 1. **Import the repo:** in Vercel, choose _Add New → Project_ and import this GitHub repo.
    Build settings come from `vercel.json`. Set _Settings → Functions → Region_ to
    **Singapore (`sin1`)**, next to the database.
-2. **Database (Neon Postgres, free, Singapore):** the Neon project is described in
-   `neon.ts` (Postgres + Neon Auth, which is enabled but not used by the site yet). With
-   the Neon CLI (`npm i -g neon`), link and pull its variables into `.env.local`:
-   ```sh
-   neon login        # or set NEON_API_KEY
-   neon init         # first time only: links the project, writes neon.ts
-   neon deploy       # applies neon.ts and pulls DATABASE_URL etc. into .env.local
-   ```
-3. **Environment variables** (_Settings → Environment Variables_, mark secrets
+2. **Database (Neon Postgres via the Vercel Marketplace, free):** in the Vercel project,
+   open _Storage → Create Database → Neon_, pick **Singapore**, and connect it to the
+   project for all environments. Vercel sets `DATABASE_URL` (pooled) and
+   `DATABASE_URL_UNPOOLED` (direct) for you. If it offers a separate database branch
+   for **Preview** deployments, turn it on, so test submissions never land in real
+   data. Open the database in Neon's console from _Storage → your database → Open in
+   Neon_ (that's where the SQL editor is). `neon.ts` holds the Neon service settings for
+   the Neon CLI; it isn't required for the site to run.
+3. **Other environment variables** (_Settings → Environment Variables_, mark secrets
    **Sensitive**):
 
-   | Name                      | Production                                  | Preview                          |
-   | ------------------------- | ------------------------------------------- | -------------------------------- |
-   | `DATABASE_URL`            | Neon `production` branch, **pooled** string | a separate Neon `preview` branch |
-   | `DATABASE_URL_UNPOOLED`   | Neon `production` branch, direct string     | (not needed)                     |
-   | `CRON_SECRET`             | any long random string                      | (not needed)                     |
-   | `VITE_TURNSTILE_SITE_KEY` | real site key (needed at **build** time)    | same                             |
-   | `TURNSTILE_SECRET_KEY`    | real secret key                             | same                             |
+   | Name                      | Production                               | Preview      |
+   | ------------------------- | ---------------------------------------- | ------------ |
+   | `CRON_SECRET`             | any long random string                   | (not needed) |
+   | `VITE_TURNSTILE_SITE_KEY` | real site key (needed at **build** time) | same         |
+   | `TURNSTILE_SECRET_KEY`    | real secret key                          | same         |
 
-   Create the preview branch with `neon checkout preview --create`, so test submissions
-   from previews never land in real data.
+   For local development, copy the variables into `.env.local` (the Vercel CLI does it
+   with `vercel env pull .env.local`). Never commit that file.
 
 4. **Migrations run automatically:** production builds run `npm run db:migrate` before
-   building (`buildCommand` in `vercel.json`); it only applies new files in
-   `migrations/`. Preview builds skip it. To migrate the `preview` branch, put its string
-   in `.env.local` and run `npm run db:migrate` yourself.
+   building (`buildCommand` in `vercel.json`); it uses `DATABASE_URL_UNPOOLED` and only
+   applies new files in `migrations/`. Preview builds skip it. To migrate another branch
+   (such as a preview database), put its strings in `.env.local` and run
+   `npm run db:migrate` yourself.
 5. **Turnstile:** in the Cloudflare dashboard, go to _Turnstile → your widget_ and add
    `betterternate.vercel.app` (and the Netlify domain, for the backup).
 6. **Redeploy** so the build picks up the variables.
