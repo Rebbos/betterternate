@@ -1,5 +1,7 @@
 ;(() => {
-  if (window.location.hostname !== 'betterternate.netlify.app') return
+  // Production hosts only (Vercel primary, Netlify backup): no analytics on previews or localhost.
+  const hosts = ['betterternate.vercel.app', 'betterternate.netlify.app']
+  if (!hosts.includes(window.location.hostname)) return
 
   const beacon = document.createElement('script')
   beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js'

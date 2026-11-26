@@ -50,3 +50,9 @@ test('both hosts fall back to index.html for app routes, but not for /api', () =
   // On Netlify, functions with a config.path take priority over the /* fallback.
   expect(readFileSync('netlify/functions/api.ts', 'utf8')).toMatch(/path: \[\s*'\/api\//)
 })
+
+// Netlify deployments are off for now (Vercel is the live host). If you are turning
+// Netlify back on on purpose, delete the ignore line in netlify.toml and this test.
+test('Netlify deployments stay off: netlify.toml cancels every build', () => {
+  expect(toml).toMatch(/^\s*ignore = "exit 0"\s*$/m)
+})

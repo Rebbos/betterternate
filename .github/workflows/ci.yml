@@ -1,5 +1,5 @@
 # Runs on every PR (and on main): the same checks as locally, plus browser tests and Lighthouse.
-# Deploys are handled by Netlify's Git integration, not here.
+# Deploys are handled by Vercel's Git integration (Netlify is a backup with builds stopped), not here.
 name: CI
 
 on:
