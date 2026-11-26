@@ -20,10 +20,11 @@ website of the Municipality of Ternate and links to official channels.
   Better Ternate has its own visual identity (inspired by BetterGov.ph, not styled like it)
 - react-i18next (English + Filipino), lucide-react icons, fuse.js search, zod schemas
 - Content as JSON + Markdown in /content (edited by volunteers via PR)
-- Netlify (hosting, Git integration deploys). Vercel is PAUSED: vercel.json has Git
-  deploys turned off; keep it working but don't deploy there unless asked.
-  Form API handlers live in /api (Web Request/Response); netlify/functions/api.ts serves
-  them on Netlify. Postgres via Neon (form storage; DATABASE_URL or NETLIFY_DATABASE_URL).
+- Vercel (primary hosting, Git integration deploys) + Vercel Functions (/api) + Vercel
+  Cron (daily /api/purge-old, needs CRON_SECRET). Netlify is the BACKUP host: keep
+  netlify.toml and netlify/ working (netlify/functions/api.ts serves the same /api
+  handlers; purge-old.ts is its cron) but don't delete or deploy there unless asked.
+  Postgres via Neon (form storage; DATABASE_URL or NETLIFY_DATABASE_URL).
   Security headers in vercel.json AND netlify.toml: keep them in sync.
 - Cloudflare Turnstile on all public forms, verified server-side
 - Vitest + React Testing Library, Playwright (+ @axe-core/playwright)
@@ -57,7 +58,7 @@ placeholders (rule 5) when borrowing content.
 8. Stop at the end of each phase and report: what was built, files changed, how to
    check it, and open questions. Do not start the next phase unless asked.
 9. After any change is deployed, check the live site firsthand
-   (https://betterternate.netlify.app) before calling it done. Passing local checks is
+   (Vercel production URL; Netlify backup: https://betterternate.netlify.app) before calling it done. Passing local checks is
    not enough. Re-fetch, bypassing cache, until the new deploy is live, then verify the
    pages, routes, headers and /api endpoints the change touched (curl or a browser) and
    report what you actually saw. Never solve or bypass Turnstile; ask a human to do the

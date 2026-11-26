@@ -37,3 +37,17 @@ test('no database configured → throws instead of silently doing nothing', asyn
   vi.stubEnv('NETLIFY_DATABASE_URL', '')
   await expect(runPurge(now)).rejects.toThrow('DATABASE_URL is not set')
 })
+
+test('Vercel cron endpoint refuses requests without the CRON_SECRET', async () => {
+  const { GET } = await import('../../api/purge-old')
+  const req = (auth?: string) =>
+    new Request('https://x/api/purge-old', auth ? { headers: { authorization: auth } } : {})
+  vi.stubEnv('CRON_SECRET', '')
+  expect((await GET(req('Bearer '))).status).toBe(401) // no secret set: nobody gets in
+  vi.stubEnv('CRON_SECRET', 's3cret')
+  expect((await GET(req())).status).toBe(401)
+  expect((await GET(req('Bearer wrong'))).status).toBe(401)
+  vi.stubEnv('DATABASE_URL', '')
+  vi.stubEnv('NETLIFY_DATABASE_URL', '')
+  expect((await GET(req('Bearer s3cret'))).status).toBe(500) // authorized, reaches the purge
+})

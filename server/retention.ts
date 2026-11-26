@@ -1,6 +1,7 @@
 /**
  * Data retention (Data Privacy Act, RA 10173): submissions hold names and emails, so we
- * keep them only as long as needed. Run daily by netlify/functions/purge-old.ts.
+ * keep them only as long as needed. Run daily by Vercel Cron (api/purge-old.ts) and,
+ * on the Netlify backup, netlify/functions/purge-old.ts.
  * If you change RETENTION_DAYS, update the privacy notice (about.privacyForms) too.
  */
 import { neon } from '@neondatabase/serverless'
